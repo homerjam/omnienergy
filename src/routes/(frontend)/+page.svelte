@@ -146,7 +146,7 @@
 			</div>
 			<div class={['order-1', index % 2 === 0 && 'md:order-2']}>
 				<img
-					class="-my-12 ml-auto aspect-square w-1/2 opacity-60 mix-blend-darken grayscale md:my-auto md:w-auto md:opacity-80"
+					class="-my-12 ml-auto aspect-square w-1/2 opacity-40 mix-blend-darken grayscale md:my-auto md:w-auto md:opacity-80"
 					src={imageUrl(service.image, { width: 1024, quality: 80, sharpen: 1 })}
 					alt={service.image?.alt}
 					loading="lazy"
@@ -161,7 +161,7 @@
 </div>
 
 <div class="flex gap-6 p-4 lg:gap-24 lg:px-24 xl:px-48">
-	<div class="w-1/2 space-y-4 type-copy-large lg:space-y-8">
+	<div class="w-2/3 space-y-4 type-copy-large lg:w-1/2 lg:space-y-8">
 		<p>
 			{@html marked.parse(data.home?.contact ?? '')}
 		</p>
@@ -177,7 +177,7 @@
 		>
 	</div>
 
-	<div class="w-1/2">
+	<div class="w-1/3 lg:w-1/2">
 		<img
 			class="aspect-square rounded-2xl object-cover"
 			src={imageUrl(data.home?.contactImage, {
@@ -196,7 +196,7 @@
 	<h2 class="type-heading">Testimonials</h2>
 </div>
 
-<div class="grid grid-cols-1 gap-12 px-6 pt-6 md:px-24 lg:grid-cols-2">
+<div class="grid grid-cols-1 gap-12 px-4 pt-6 md:px-24 lg:grid-cols-2">
 	{#each sampleSize(data.home?.testimonials, 4) as testimonial, index (index)}
 		<Testimonial {testimonial} />
 	{/each}
