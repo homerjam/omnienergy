@@ -74,6 +74,13 @@ export const home = defineType({
       group: 'editorial',
     }),
     defineField({
+      name: 'videos',
+      title: 'Videos',
+      type: 'array',
+      of: [defineArrayMember({type: 'muxVideo'})],
+      group: 'editorial',
+    }),
+    defineField({
       name: 'services',
       title: 'Services',
       type: 'array',
