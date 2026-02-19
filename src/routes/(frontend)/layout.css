@@ -18,6 +18,14 @@
 	font-display: swap;
 }
 
+@font-face {
+	font-family: 'DM Sans';
+	src: url('/fonts/DM_Sans/static/DMSans-Regular.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
 @theme {
 	--font-sans: 'DM Sans', sans-serif;
 	--font-mono: 'DM Mono', monospace;

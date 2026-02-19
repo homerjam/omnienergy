@@ -9,6 +9,8 @@ export const load = (async ({ locals }) => {
 			asset->{
 				${assetFragment}
 			},
+			crop,
+			hotspot,
 			alt,
 		},
 		intro,
@@ -17,6 +19,8 @@ export const load = (async ({ locals }) => {
 			asset->{
 				${assetFragment}
 			},
+			crop,
+			hotspot,
 			alt,
 		},
 		services[] {
@@ -26,6 +30,8 @@ export const load = (async ({ locals }) => {
 				asset->{
 					${assetFragment}
 				},
+				crop,
+				hotspot,
 				alt,
 			},
 			article->{
@@ -36,6 +42,8 @@ export const load = (async ({ locals }) => {
 					asset->{
 						${assetFragment}
 					},
+					crop,
+					hotspot,
 					alt,
 				},
 			},
@@ -45,6 +53,8 @@ export const load = (async ({ locals }) => {
 			asset->{
 				${assetFragment}
 			},
+			crop,
+			hotspot,
 			alt,
 		},
 		testimonials[] {
@@ -59,6 +69,8 @@ export const load = (async ({ locals }) => {
 			asset->{
 				${assetFragment}
 			},
+			crop,
+			hotspot,
 			alt,
 		},
 		qualifications[] {
@@ -66,7 +78,17 @@ export const load = (async ({ locals }) => {
 			details,
 		},
 		experience,
-		seo,
+		seo {
+			title,
+			description,
+			image {
+				asset->{
+					${assetFragment}
+				},
+				crop,
+				hotspot,
+			},
+		},
 	}`;
 
 	const home = await sanityClient.fetch<HomeQueryResult>(homeQuery, {

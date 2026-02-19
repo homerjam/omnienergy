@@ -283,7 +283,6 @@ export type Article = {
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
     alt?: string
-    caption?: string
     _type: 'image'
   }
   text?: RichTextWithMedia
@@ -531,7 +530,7 @@ export type SettingsQueryResult = {
 
 // Source: ../src/routes/(frontend)/+page.server.ts
 // Variable: homeQuery
-// Query: *[_type == "home"][0] {		tagline,		coverImage {			asset->{				    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }			},			alt,		},		intro,		missionStatement,		profileImage {			asset->{				    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }			},			alt,		},		services[] {			name,			description,			image {				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				},				alt,			},			article->{				title,				"slug": slug.current,				date,				coverImage {					asset->{						    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }					},					alt,				},			},		},		contact,		contactImage {			asset->{				    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }			},			alt,		},		testimonials[] {			source,			text,			date,			rating,			author,			originalUrl,		},		qualificationsImage {			asset->{				    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }			},			alt,		},		qualifications[] {			title,			details,		},		experience,		seo,	}
+// Query: *[_type == "home"][0] {		tagline,		coverImage {			asset->{				    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }			},			crop,			hotspot,			alt,		},		intro,		missionStatement,		profileImage {			asset->{				    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }			},			crop,			hotspot,			alt,		},		services[] {			name,			description,			image {				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				},				crop,				hotspot,				alt,			},			article->{				title,				"slug": slug.current,				date,				coverImage {					asset->{						    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }					},					crop,					hotspot,					alt,				},			},		},		contact,		contactImage {			asset->{				    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }			},			crop,			hotspot,			alt,		},		testimonials[] {			source,			text,			date,			rating,			author,			originalUrl,		},		qualificationsImage {			asset->{				    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }			},			crop,			hotspot,			alt,		},		qualifications[] {			title,			details,		},		experience,		seo {			title,			description,			image {				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				},				crop,				hotspot,			},		},	}
 export type HomeQueryResult = {
   tagline: string | null
   coverImage: {
@@ -546,6 +545,8 @@ export type HomeQueryResult = {
       aspectRatio: number | null
       blurHash: string | null
     } | null
+    crop: SanityImageCrop | null
+    hotspot: SanityImageHotspot | null
     alt: string | null
   } | null
   intro: string | null
@@ -562,6 +563,8 @@ export type HomeQueryResult = {
       aspectRatio: number | null
       blurHash: string | null
     } | null
+    crop: SanityImageCrop | null
+    hotspot: SanityImageHotspot | null
     alt: string | null
   } | null
   services: Array<{
@@ -579,6 +582,8 @@ export type HomeQueryResult = {
         aspectRatio: number | null
         blurHash: string | null
       } | null
+      crop: SanityImageCrop | null
+      hotspot: SanityImageHotspot | null
       alt: null
     } | null
     article: {
@@ -597,6 +602,8 @@ export type HomeQueryResult = {
           aspectRatio: number | null
           blurHash: string | null
         } | null
+        crop: SanityImageCrop | null
+        hotspot: SanityImageHotspot | null
         alt: string | null
       } | null
     } | null
@@ -614,6 +621,8 @@ export type HomeQueryResult = {
       aspectRatio: number | null
       blurHash: string | null
     } | null
+    crop: SanityImageCrop | null
+    hotspot: SanityImageHotspot | null
     alt: string | null
   } | null
   testimonials: Array<{
@@ -636,6 +645,8 @@ export type HomeQueryResult = {
       aspectRatio: number | null
       blurHash: string | null
     } | null
+    crop: SanityImageCrop | null
+    hotspot: SanityImageHotspot | null
     alt: string | null
   } | null
   qualifications: Array<{
@@ -643,16 +654,122 @@ export type HomeQueryResult = {
     details: string | null
   }> | null
   experience: string | null
-  seo: Seo | null
+  seo: {
+    title: string | null
+    description: string | null
+    image: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        assetId: string | null
+        extension: string | null
+        mimeType: string | null
+        width: number | null
+        height: number | null
+        aspectRatio: number | null
+        blurHash: string | null
+      } | null
+      crop: SanityImageCrop | null
+      hotspot: SanityImageHotspot | null
+    } | null
+  } | null
+} | null
+
+// Source: ../src/routes/(frontend)/library/[slug]/+page.server.ts
+// Variable: articleQuery
+// Query: *[_type == "article" && slug.current == $slug][0] {		title,		date,		coverImage {			asset->{				    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }			},			crop,			hotspot,			alt,		},		"text": text[] {			...,			_type == "image" => {				...,				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				},				crop,				hotspot,				alt			},		},		seo {			title,			description,			image {				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				},				crop,				hotspot,			},		},	}
+export type ArticleQueryResult = {
+  title: string | null
+  date: string | null
+  coverImage: {
+    asset: {
+      _id: string
+      _type: 'sanity.imageAsset'
+      assetId: string | null
+      extension: string | null
+      mimeType: string | null
+      width: number | null
+      height: number | null
+      aspectRatio: number | null
+      blurHash: string | null
+    } | null
+    crop: SanityImageCrop | null
+    hotspot: SanityImageHotspot | null
+    alt: string | null
+  } | null
+  text: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>
+          text?: string
+          _type: 'span'
+          _key: string
+        }>
+        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+        listItem?: 'bullet' | 'number'
+        markDefs?: Array<{
+          href?: string
+          _type: 'link'
+          _key: string
+        }>
+        level?: number
+        _type: 'block'
+        _key: string
+      }
+    | {
+        _key: string
+        _type: 'embed'
+        url?: string
+        caption?: string
+      }
+    | {
+        asset: {
+          _id: string
+          _type: 'sanity.imageAsset'
+          assetId: string | null
+          extension: string | null
+          mimeType: string | null
+          width: number | null
+          height: number | null
+          aspectRatio: number | null
+          blurHash: string | null
+        } | null
+        media?: unknown
+        hotspot: SanityImageHotspot | null
+        crop: SanityImageCrop | null
+        alt: string | null
+        caption?: string
+        _type: 'image'
+        _key: string
+      }
+  > | null
+  seo: {
+    title: string | null
+    description: string | null
+    image: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        assetId: string | null
+        extension: string | null
+        mimeType: string | null
+        width: number | null
+        height: number | null
+        aspectRatio: number | null
+        blurHash: string | null
+      } | null
+      crop: SanityImageCrop | null
+      hotspot: SanityImageHotspot | null
+    } | null
+  } | null
 } | null
 
 // Source: ../src/routes/(frontend)/privacy-policy/+page.server.ts
 // Variable: privacyPolicyQuery
-// Query: *[_type == "privacyPolicy"][0] {		title,		lastUpdated,		seo,		"content": content[] {			...,			_type == "image" => {				...,				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				},			},		},	}
+// Query: *[_type == "privacyPolicy"][0] {		title,		lastUpdated,		"content": content[] {			...,			_type == "image" => {				...,				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				},			},		},		seo {			title,			description,			image {				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				},				crop,				hotspot,			},		},	}
 export type PrivacyPolicyQueryResult = {
   title: string | null
   lastUpdated: string | null
-  seo: Seo | null
   content: Array<
     | {
         children?: Array<{
@@ -699,15 +816,33 @@ export type PrivacyPolicyQueryResult = {
         _key: string
       }
   > | null
+  seo: {
+    title: string | null
+    description: string | null
+    image: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        assetId: string | null
+        extension: string | null
+        mimeType: string | null
+        width: number | null
+        height: number | null
+        aspectRatio: number | null
+        blurHash: string | null
+      } | null
+      crop: SanityImageCrop | null
+      hotspot: SanityImageHotspot | null
+    } | null
+  } | null
 } | null
 
 // Source: ../src/routes/(frontend)/terms-and-conditions/+page.server.ts
 // Variable: termsAndConditionsQuery
-// Query: *[_type == "termsAndConditions"][0] {		title,		lastUpdated,		seo,		"content": content[] {			...,			_type == "image" => {				...,				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				},			},		},	}
+// Query: *[_type == "termsAndConditions"][0] {		title,		lastUpdated,		"content": content[] {			...,			_type == "image" => {				...,				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				},			},		},		seo {			title,			description,			image {				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				},				crop,				hotspot,			},		},	}
 export type TermsAndConditionsQueryResult = {
   title: string | null
   lastUpdated: string | null
-  seo: Seo | null
   content: Array<
     | {
         children?: Array<{
@@ -754,6 +889,25 @@ export type TermsAndConditionsQueryResult = {
         _key: string
       }
   > | null
+  seo: {
+    title: string | null
+    description: string | null
+    image: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        assetId: string | null
+        extension: string | null
+        mimeType: string | null
+        width: number | null
+        height: number | null
+        aspectRatio: number | null
+        blurHash: string | null
+      } | null
+      crop: SanityImageCrop | null
+      hotspot: SanityImageHotspot | null
+    } | null
+  } | null
 } | null
 
 // Query TypeMap
@@ -761,8 +915,9 @@ import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type == "settings"][0] {\n\t\temail,\n\t\tphoneNumber,\n\t\tonlineBookingUrl,\n\t\tinstagramUrl,\n\t\tfacebookUrl,\n\t\tlinkedinUrl,\n\t}': SettingsQueryResult
-    '*[_type == "home"][0] {\n\t\ttagline,\n\t\tcoverImage {\n\t\t\tasset->{\n\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t},\n\t\t\talt,\n\t\t},\n\t\tintro,\n\t\tmissionStatement,\n\t\tprofileImage {\n\t\t\tasset->{\n\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t},\n\t\t\talt,\n\t\t},\n\t\tservices[] {\n\t\t\tname,\n\t\t\tdescription,\n\t\t\timage {\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t},\n\t\t\t\talt,\n\t\t\t},\n\t\t\tarticle->{\n\t\t\t\ttitle,\n\t\t\t\t"slug": slug.current,\n\t\t\t\tdate,\n\t\t\t\tcoverImage {\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t\t},\n\t\t\t\t\talt,\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tcontact,\n\t\tcontactImage {\n\t\t\tasset->{\n\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t},\n\t\t\talt,\n\t\t},\n\t\ttestimonials[] {\n\t\t\tsource,\n\t\t\ttext,\n\t\t\tdate,\n\t\t\trating,\n\t\t\tauthor,\n\t\t\toriginalUrl,\n\t\t},\n\t\tqualificationsImage {\n\t\t\tasset->{\n\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t},\n\t\t\talt,\n\t\t},\n\t\tqualifications[] {\n\t\t\ttitle,\n\t\t\tdetails,\n\t\t},\n\t\texperience,\n\t\tseo,\n\t}': HomeQueryResult
-    '*[_type == "privacyPolicy"][0] {\n\t\ttitle,\n\t\tlastUpdated,\n\t\tseo,\n\t\t"content": content[] {\n\t\t\t...,\n\t\t\t_type == "image" => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t}': PrivacyPolicyQueryResult
-    '*[_type == "termsAndConditions"][0] {\n\t\ttitle,\n\t\tlastUpdated,\n\t\tseo,\n\t\t"content": content[] {\n\t\t\t...,\n\t\t\t_type == "image" => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t}': TermsAndConditionsQueryResult
+    '*[_type == "home"][0] {\n\t\ttagline,\n\t\tcoverImage {\n\t\t\tasset->{\n\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t},\n\t\t\tcrop,\n\t\t\thotspot,\n\t\t\talt,\n\t\t},\n\t\tintro,\n\t\tmissionStatement,\n\t\tprofileImage {\n\t\t\tasset->{\n\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t},\n\t\t\tcrop,\n\t\t\thotspot,\n\t\t\talt,\n\t\t},\n\t\tservices[] {\n\t\t\tname,\n\t\t\tdescription,\n\t\t\timage {\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t},\n\t\t\t\tcrop,\n\t\t\t\thotspot,\n\t\t\t\talt,\n\t\t\t},\n\t\t\tarticle->{\n\t\t\t\ttitle,\n\t\t\t\t"slug": slug.current,\n\t\t\t\tdate,\n\t\t\t\tcoverImage {\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t\t},\n\t\t\t\t\tcrop,\n\t\t\t\t\thotspot,\n\t\t\t\t\talt,\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tcontact,\n\t\tcontactImage {\n\t\t\tasset->{\n\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t},\n\t\t\tcrop,\n\t\t\thotspot,\n\t\t\talt,\n\t\t},\n\t\ttestimonials[] {\n\t\t\tsource,\n\t\t\ttext,\n\t\t\tdate,\n\t\t\trating,\n\t\t\tauthor,\n\t\t\toriginalUrl,\n\t\t},\n\t\tqualificationsImage {\n\t\t\tasset->{\n\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t},\n\t\t\tcrop,\n\t\t\thotspot,\n\t\t\talt,\n\t\t},\n\t\tqualifications[] {\n\t\t\ttitle,\n\t\t\tdetails,\n\t\t},\n\t\texperience,\n\t\tseo {\n\t\t\ttitle,\n\t\t\tdescription,\n\t\t\timage {\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t},\n\t\t\t\tcrop,\n\t\t\t\thotspot,\n\t\t\t},\n\t\t},\n\t}': HomeQueryResult
+    '*[_type == "article" && slug.current == $slug][0] {\n\t\ttitle,\n\t\tdate,\n\t\tcoverImage {\n\t\t\tasset->{\n\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t},\n\t\t\tcrop,\n\t\t\thotspot,\n\t\t\talt,\n\t\t},\n\t\t"text": text[] {\n\t\t\t...,\n\t\t\t_type == "image" => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t},\n\t\t\t\tcrop,\n\t\t\t\thotspot,\n\t\t\t\talt\n\t\t\t},\n\t\t},\n\t\tseo {\n\t\t\ttitle,\n\t\t\tdescription,\n\t\t\timage {\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t},\n\t\t\t\tcrop,\n\t\t\t\thotspot,\n\t\t\t},\n\t\t},\n\t}': ArticleQueryResult
+    '*[_type == "privacyPolicy"][0] {\n\t\ttitle,\n\t\tlastUpdated,\n\t\t"content": content[] {\n\t\t\t...,\n\t\t\t_type == "image" => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tseo {\n\t\t\ttitle,\n\t\t\tdescription,\n\t\t\timage {\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t},\n\t\t\t\tcrop,\n\t\t\t\thotspot,\n\t\t\t},\n\t\t},\n\t}': PrivacyPolicyQueryResult
+    '*[_type == "termsAndConditions"][0] {\n\t\ttitle,\n\t\tlastUpdated,\n\t\t"content": content[] {\n\t\t\t...,\n\t\t\t_type == "image" => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tseo {\n\t\t\ttitle,\n\t\t\tdescription,\n\t\t\timage {\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t},\n\t\t\t\tcrop,\n\t\t\t\thotspot,\n\t\t\t},\n\t\t},\n\t}': TermsAndConditionsQueryResult
   }
 }

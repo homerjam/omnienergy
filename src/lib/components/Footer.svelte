@@ -19,6 +19,6 @@
 	<div class="m-auto flex gap-2 xl:mr-0">
 		<a href="/privacy-policy">Privacy Policy</a>
 		<a href="/terms-and-conditions">Terms & Conditions</a>
-		<p>© {new Date().getFullYear()} Omni Energy Therapy. All rights reserved.</p>
+		<p>© {new Date().getFullYear()} Omni Energy Therapy</p>
 	</div>
 </div>

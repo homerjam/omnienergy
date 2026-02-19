@@ -6,7 +6,6 @@ export const load = (async ({ locals }) => {
 	const privacyPolicyQuery = groq`*[_type == "privacyPolicy"][0] {
 		title,
 		lastUpdated,
-		seo,
 		"content": content[] {
 			...,
 			_type == "image" => {
@@ -14,6 +13,17 @@ export const load = (async ({ locals }) => {
 				asset->{
 					${assetFragment}
 				},
+			},
+		},
+		seo {
+			title,
+			description,
+			image {
+				asset->{
+					${assetFragment}
+				},
+				crop,
+				hotspot,
 			},
 		},
 	}`;

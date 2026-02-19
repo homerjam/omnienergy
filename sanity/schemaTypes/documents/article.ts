@@ -57,11 +57,11 @@ export const article = defineType({
           type: 'string',
           title: 'Alternative text',
         },
-        {
-          name: 'caption',
-          type: 'string',
-          title: 'Caption',
-        },
+        // {
+        //   name: 'caption',
+        //   type: 'string',
+        //   title: 'Caption',
+        // },
       ],
       group: 'editorial',
     }),

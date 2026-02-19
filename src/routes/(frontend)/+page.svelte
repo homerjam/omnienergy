@@ -9,6 +9,7 @@
 	import Testimonial from '$lib/components/Testimonial.svelte';
 	import type { PageData } from './$types';
 	import Footer from '$lib/components/Footer.svelte';
+	import { resolve } from '$app/paths';
 
 	let { data }: { data: PageData } = $props();
 
@@ -31,6 +32,39 @@
 
 	$inspect(data);
 </script>
+
+<svelte:head>
+	<title>{data.home?.seo?.title ?? 'Omni Energy Therapy'}</title>
+	<meta name="description" content={data.home?.seo?.description ?? ''} />
+
+	{#if data.home?.seo?.image}
+		<meta
+			property="og:image"
+			content={imageUrl(data.home?.seo?.image, {
+				height: 800,
+				width: 1200,
+				quality: 80,
+				sharpen: 1,
+			})}
+		/>
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="800" />
+		<meta property="og:title" content={data.home?.seo?.title ?? 'Omni Energy Therapy'} />
+		<meta property="og:description" content={data.home?.seo?.description ?? ''} />
+		<meta
+			name="twitter:image"
+			content={imageUrl(data.home?.seo?.image, {
+				height: 800,
+				width: 1200,
+				quality: 80,
+				sharpen: 1,
+			})}
+		/>
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={data.home?.seo?.title ?? 'Omni Energy Therapy'} />
+		<meta name="twitter:description" content={data.home?.seo?.description ?? ''} />
+	{/if}
+</svelte:head>
 
 <div class="absolute top-0 left-0 z-1 w-full">
 	<Header class="text-white" />
@@ -61,6 +95,7 @@
 		'transition-opacity duration-75',
 		headerVisible ? 'opacity-100' : 'pointer-events-none opacity-0',
 	]}
+	aria-hidden="true"
 >
 	<Header />
 </div>
@@ -79,7 +114,7 @@
 		<div class="m-auto space-y-2 type-copy-large">
 			{@html marked.parse(data.home?.intro ?? '')}
 		</div>
-		<div class="m-auto hidden space-y-2 type-copy-default sm:block">
+		<div class="m-auto mt-0! hidden space-y-2 type-copy-default sm:block">
 			{@html marked.parse(data.home?.missionStatement ?? '')}
 		</div>
 	</div>
@@ -103,7 +138,11 @@
 				<div class="space-y-2 type-copy-default">
 					{@html marked.parse(service.description ?? '')}
 				</div>
-				<p class="type-copy-default underline">Learn more in the Library →</p>
+				<p class="type-copy-default">
+					<a href={resolve('/(frontend)/library/[slug]', { slug: service.article?.slug ?? '' })}
+						>Learn more in the Library →</a
+					>
+				</p>
 			</div>
 			<div class={['order-1', index % 2 === 0 && 'md:order-2']}>
 				<img
@@ -177,7 +216,7 @@
 		/>
 	</div>
 
-	<div class="w-auto space-y-2 lg:w-1/2 lg:space-y-4">
+	<div class="w-auto space-y-4 lg:w-1/2 lg:space-y-8">
 		<div class="relative space-y-2 type-copy-small">
 			{#each data.home?.qualifications as qualification, index (index)}
 				<p>

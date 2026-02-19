@@ -20,7 +20,7 @@
 <Header />
 
 <main class="mx-auto max-w-3xl px-4 py-16 lg:px-8">
-	<h1 class="mb-4 type-heading">{data.page?.title ?? 'Privacy Policy'}</h1>
+	<h1 class="mb-4 text-center type-heading">{data.page?.title ?? 'Privacy Policy'}</h1>
 
 	<div class="prose max-w-none type-copy-default text-black!">
 		{@html toHTML(data.page?.content ?? [])}
