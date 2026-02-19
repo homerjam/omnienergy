@@ -37,11 +37,6 @@
 				src={imageUrl(data.article.coverImage, { width: 1200, quality: 80, sharpen: 1 })}
 				alt={data.article.coverImage.alt}
 			/>
-			{#if data.article.coverImage.caption}
-				<figcaption class="mt-2 type-copy-small text-black/60">
-					{data.article.coverImage.caption}
-				</figcaption>
-			{/if}
 		</figure>
 	{/if}
 

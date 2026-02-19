@@ -100,8 +100,8 @@
 	<Header />
 </div>
 
-<div class="flex gap-6 px-4 lg:gap-12 lg:px-24 2xl:px-48">
-	<div class="w-auto shrink-0 lg:w-1/2">
+<div class="flex justify-center gap-6 px-4 lg:gap-12 lg:px-24 xl:gap-24 2xl:px-48">
+	<div class="w-auto shrink-0">
 		<img
 			class="sticky top-28 m-auto max-h-[50vw] rounded-2xl sm:max-h-[50vw] lg:max-h-[75vh]"
 			src={imageUrl(data.home?.profileImage, { width: 1024, quality: 80, sharpen: 1 })}
@@ -110,7 +110,7 @@
 		/>
 	</div>
 
-	<div class="flex w-auto flex-col gap-y-2 lg:w-1/2 lg:gap-y-4">
+	<div class="flex w-auto max-w-lg flex-col gap-y-2 lg:gap-y-4">
 		<div class="m-auto space-y-2 type-copy-large">
 			{@html marked.parse(data.home?.intro ?? '')}
 		</div>
@@ -160,8 +160,8 @@
 	<h2 class="type-heading">Contact</h2>
 </div>
 
-<div class="flex flex-wrap gap-6 p-4 md:flex-nowrap lg:gap-24 lg:px-24 xl:px-48">
-	<div class="w-full space-y-4 type-copy-large lg:w-1/2 lg:space-y-8">
+<div class="flex gap-6 p-4 lg:gap-24 lg:px-24 xl:px-48">
+	<div class="w-1/2 space-y-4 type-copy-large lg:space-y-8">
 		<p>
 			{@html marked.parse(data.home?.contact ?? '')}
 		</p>
@@ -177,7 +177,7 @@
 		>
 	</div>
 
-	<div class="w-full lg:w-1/2">
+	<div class="w-1/2">
 		<img
 			class="aspect-square rounded-2xl object-cover"
 			src={imageUrl(data.home?.contactImage, {
