@@ -6,7 +6,7 @@ import {
 } from '@sanity/image-url';
 
 const imageBuilder = createImageUrlBuilder({
-	projectId: 'twr3rlz4',
+	projectId: 'zjpuxi7o',
 	dataset: 'production',
 });
 

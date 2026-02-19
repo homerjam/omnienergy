@@ -13,12 +13,6 @@
  */
 
 // Source: schema.json
-export type Quote = {
-  _type: 'quote'
-  quote?: InternationalizedArrayText
-  author?: string
-}
-
 export type SanityImageAssetReference = {
   _ref: string
   _type: 'reference'
@@ -26,10 +20,31 @@ export type SanityImageAssetReference = {
   [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
 }
 
+export type ArticleReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'article'
+}
+
+export type Service = {
+  _type: 'service'
+  name?: string
+  description?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  article?: ArticleReference
+}
+
 export type Seo = {
   _type: 'seo'
-  title?: InternationalizedArrayString
-  description?: InternationalizedArrayText
+  title?: string
+  description?: string
   image?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -39,19 +54,39 @@ export type Seo = {
   }
 }
 
-export type SectionCard = {
-  _type: 'sectionCard'
-  title?: InternationalizedArrayString
-  description?: InternationalizedArrayText
-  image?: {
-    asset?: SanityImageAssetReference
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
-  }
-  url?: string
-}
+export type RichTextWithMedia = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }
+  | {
+      asset?: SanityImageAssetReference
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      caption?: string
+      _type: 'image'
+      _key: string
+    }
+  | ({
+      _key: string
+    } & Embed)
+>
 
 export type RichText = Array<{
   children?: Array<{
@@ -72,43 +107,56 @@ export type RichText = Array<{
   _key: string
 }>
 
-export type Owner = {
-  _id: string
-  _type: 'owner'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  name?: string
-  location?: string
-  category?: 'public' | 'private'
-  date?: string
-  exchangeMethod?: string
+export type Quote = {
+  _type: 'quote'
+  quote?: string
+  author?: string
 }
 
-export type News = {
+export type Embed = {
+  _type: 'embed'
+  url?: string
+  caption?: string
+}
+
+export type Settings = {
   _id: string
-  _type: 'news'
+  _type: 'settings'
   _createdAt: string
   _updatedAt: string
   _rev: string
-  title?: InternationalizedArrayString
-  date?: string
-  image?: {
+  email?: string
+  phoneNumber?: string
+  onlineBookingUrl?: string
+  instagramUrl?: string
+  facebookUrl?: string
+  linkedinUrl?: string
+}
+
+export type Home = {
+  _id: string
+  _type: 'home'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  tagline?: string
+  coverImage?: {
     asset?: SanityImageAssetReference
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
+    alt?: string
     _type: 'image'
   }
-  summary?: InternationalizedArrayRichText
-  body?: InternationalizedArrayRichText
+  intro?: string
+  missionStatement?: string
+  services?: Array<
+    {
+      _key: string
+    } & Service
+  >
+  seo?: Seo
 }
-
-export type InternationalizedArrayRichText = Array<
-  {
-    _key: string
-  } & InternationalizedArrayRichTextValue
->
 
 export type SanityImageCrop = {
   _type: 'sanity.imageCrop'
@@ -126,215 +174,33 @@ export type SanityImageHotspot = {
   width?: number
 }
 
-export type InternationalizedArrayString = Array<
-  {
-    _key: string
-  } & InternationalizedArrayStringValue
->
-
-export type ArtworkReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'artwork'
-}
-
-export type Home = {
+export type Article = {
   _id: string
-  _type: 'home'
+  _type: 'article'
   _createdAt: string
   _updatedAt: string
   _rev: string
-  text?: InternationalizedArrayRichText
-  artworks?: Array<
-    {
-      _key: string
-    } & ArtworkReference
-  >
-  sectionCards?: Array<
-    {
-      _key: string
-    } & SectionCard
-  >
-  aboutText?: InternationalizedArrayRichText
-  aboutImage?: {
+  orderRank?: string
+  title?: string
+  slug?: Slug
+  date?: string
+  coverImage?: {
     asset?: SanityImageAssetReference
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
+    alt?: string
     caption?: string
     _type: 'image'
   }
+  text?: RichTextWithMedia
   seo?: Seo
 }
 
-export type InternationalizedArrayText = Array<
-  {
-    _key: string
-  } & InternationalizedArrayTextValue
->
-
-export type Foundation = {
-  _id: string
-  _type: 'foundation'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  description?: InternationalizedArrayRichText
-  quote?: Quote
-  collection?: InternationalizedArrayRichText
-  faq?: Array<{
-    question?: InternationalizedArrayString
-    answer?: InternationalizedArrayString
-    _key: string
-  }>
-  quote2?: Quote
-  contact?: InternationalizedArrayRichText
-  emails?: Array<{
-    name?: InternationalizedArrayString
-    email?: string
-    _key: string
-  }>
-}
-
-export type Exhibition = {
-  _id: string
-  _type: 'exhibition'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: InternationalizedArrayString
-  date?: string
-  dateEnd?: string
-  venue?: string
-  location?: string
-  image?: {
-    asset?: SanityImageAssetReference
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
-  }
-  summary?: InternationalizedArrayRichText
-  body?: InternationalizedArrayRichText
-}
-
-export type Collection = {
-  _id: string
-  _type: 'collection'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: string
-  city?: string
-  country?: string
-  dateStart?: string
-  dateEnd?: string
-}
-
-export type Archive = {
-  _id: string
-  _type: 'archive'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  description?: InternationalizedArrayRichText
-  artworks?: Array<
-    {
-      _key: string
-    } & ArtworkReference
-  >
-}
-
-export type CatalogueRaisonne = {
-  _id: string
-  _type: 'catalogueRaisonne'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  description?: InternationalizedArrayRichText
-  artworks?: Array<
-    {
-      _key: string
-    } & ArtworkReference
-  >
-}
-
-export type MaterialReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'material'
-}
-
-export type CollectionReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'collection'
-}
-
-export type OwnerReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'owner'
-}
-
-export type Artwork = {
-  _id: string
-  _type: 'artwork'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  id?: string
-  title?: string
-  date?: string
-  dimensions?: string
-  material?: MaterialReference
-  collections?: Array<
-    {
-      _key: string
-    } & CollectionReference
-  >
-  owners?: Array<
-    {
-      _key: string
-    } & OwnerReference
-  >
-  summary?: InternationalizedArrayRichText
-  description?: InternationalizedArrayRichText
-  image?: {
-    asset?: SanityImageAssetReference
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
-  }
-}
-
-export type Material = {
-  _id: string
-  _type: 'material'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  name?: string
-}
-
-export type InternationalizedArrayRichTextValue = {
-  _type: 'internationalizedArrayRichTextValue'
-  value?: RichText
-}
-
-export type InternationalizedArrayTextValue = {
-  _type: 'internationalizedArrayTextValue'
-  value?: string
-}
-
-export type InternationalizedArrayStringValue = {
-  _type: 'internationalizedArrayStringValue'
-  value?: string
+export type Slug = {
+  _type: 'slug'
+  current?: string
+  source?: string
 }
 
 export type SanityImagePaletteSwatch = {
@@ -434,40 +300,21 @@ export type Geopoint = {
   alt?: number
 }
 
-export type Slug = {
-  _type: 'slug'
-  current?: string
-  source?: string
-}
-
 export type AllSanitySchemaTypes =
-  | Quote
   | SanityImageAssetReference
+  | ArticleReference
+  | Service
   | Seo
-  | SectionCard
+  | RichTextWithMedia
   | RichText
-  | Owner
-  | News
-  | InternationalizedArrayRichText
+  | Quote
+  | Embed
+  | Settings
+  | Home
   | SanityImageCrop
   | SanityImageHotspot
-  | InternationalizedArrayString
-  | ArtworkReference
-  | Home
-  | InternationalizedArrayText
-  | Foundation
-  | Exhibition
-  | Collection
-  | Archive
-  | CatalogueRaisonne
-  | MaterialReference
-  | CollectionReference
-  | OwnerReference
-  | Artwork
-  | Material
-  | InternationalizedArrayRichTextValue
-  | InternationalizedArrayTextValue
-  | InternationalizedArrayStringValue
+  | Article
+  | Slug
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -476,35 +323,44 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageAsset
   | Geopoint
-  | Slug
 
 export declare const internalGroqTypeReferenceTo: unique symbol
 
+// Source: ../src/routes/(frontend)/+layout.server.ts
+// Variable: settingsQuery
+// Query: *[_type == "settings"][0] {		email,		phoneNumber,		onlineBookingUrl,		instagramUrl,		facebookUrl,		linkedinUrl,	}
+export type SettingsQueryResult = {
+  email: string | null
+  phoneNumber: string | null
+  onlineBookingUrl: string | null
+  instagramUrl: string | null
+  facebookUrl: string | null
+  linkedinUrl: string | null
+} | null
+
 // Source: ../src/routes/(frontend)/+page.server.ts
 // Variable: homeQuery
-// Query: *[_type == "home"][0] {		"text": coalesce(text[_key == $locale][0].value, text[_key == $baseLocale][0].value),		artworks[]->{			id,			title,			date,			image {				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				}			},		},		sectionCards[] {			"title": coalesce(title[_key == $locale][0].value, title[_key == $baseLocale][0].value),			"description": coalesce(description[_key == $locale][0].value, description[_key == $baseLocale][0].value),			image {				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				},				crop,				hotspot,			},			url		},		"aboutText": coalesce(aboutText[_key == $locale][0].value, aboutText[_key == $baseLocale][0].value),		aboutImage {			asset->{				    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }			},			caption,		},	}
+// Query: *[_type == "home"][0] {		tagline,		coverImage {			asset->{				    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }			},			alt,		},		intro,		missionStatement,		services[] {			name,			description,			image {				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				}			},			article->{				title,				"slug": slug.current,				date,				coverImage {					asset->{						    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }					}				},			},		},		seo,	}
 export type HomeQueryResult = {
-  text: RichText | null
-  artworks: Array<{
-    id: string | null
-    title: string | null
-    date: string | null
-    image: {
-      asset: {
-        _id: string
-        _type: 'sanity.imageAsset'
-        assetId: string | null
-        extension: string | null
-        mimeType: string | null
-        width: number | null
-        height: number | null
-        aspectRatio: number | null
-        blurHash: string | null
-      } | null
+  tagline: string | null
+  coverImage: {
+    asset: {
+      _id: string
+      _type: 'sanity.imageAsset'
+      assetId: string | null
+      extension: string | null
+      mimeType: string | null
+      width: number | null
+      height: number | null
+      aspectRatio: number | null
+      blurHash: string | null
     } | null
-  }> | null
-  sectionCards: Array<{
-    title: string | null
+    alt: string | null
+  } | null
+  intro: string | null
+  missionStatement: string | null
+  services: Array<{
+    name: string | null
     description: string | null
     image: {
       asset: {
@@ -518,182 +374,12 @@ export type HomeQueryResult = {
         aspectRatio: number | null
         blurHash: string | null
       } | null
-      crop: SanityImageCrop | null
-      hotspot: SanityImageHotspot | null
     } | null
-    url: string | null
-  }> | null
-  aboutText: RichText | null
-  aboutImage: {
-    asset: {
-      _id: string
-      _type: 'sanity.imageAsset'
-      assetId: string | null
-      extension: string | null
-      mimeType: string | null
-      width: number | null
-      height: number | null
-      aspectRatio: number | null
-      blurHash: string | null
-    } | null
-    caption: string | null
-  } | null
-} | null
-
-// Source: ../src/routes/(frontend)/archive/+page.server.ts
-// Variable: archiveQuery
-// Query: *[_type == "archive"][0] {		"description": coalesce(description[_key == $locale][0].value, description[_key == $baseLocale][0].value),		artworks[]-> {			_id,			title,			date,			image {				asset-> {					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    },				}			},		},	}
-export type ArchiveQueryResult = {
-  description: RichText | null
-  artworks: Array<{
-    _id: string
-    title: string | null
-    date: string | null
-    image: {
-      asset: {
-        _id: string
-        _type: 'sanity.imageAsset'
-        assetId: string | null
-        extension: string | null
-        mimeType: string | null
-        width: number | null
-        height: number | null
-        aspectRatio: number | null
-        blurHash: string | null
-      } | null
-    } | null
-  }> | null
-} | null
-
-// Source: ../src/routes/(frontend)/archive/[id]/+page.server.ts
-// Variable: artworkQuery
-// Query: *[_type == "artwork" && _id == $id][0] {		id,		title,		date,		material-> {			name,		},		dimensions,		image {			asset-> {				    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    },			},		},		owners[]-> {			name,			location,			category,			date,			exchangeMethod,		},		collections[]-> {			title,			city,			country,			dateStart,			dateEnd,		},		"summary": coalesce(summary[_key == $locale][0].value, summary[_key == $baseLocale][0].value),		"description": coalesce(description[_key == $locale][0].value, description[_key == $baseLocale][0].value),	}
-export type ArtworkQueryResult = {
-  id: string | null
-  title: string | null
-  date: string | null
-  material: {
-    name: string | null
-  } | null
-  dimensions: string | null
-  image: {
-    asset: {
-      _id: string
-      _type: 'sanity.imageAsset'
-      assetId: string | null
-      extension: string | null
-      mimeType: string | null
-      width: number | null
-      height: number | null
-      aspectRatio: number | null
-      blurHash: string | null
-    } | null
-  } | null
-  owners: Array<{
-    name: string | null
-    location: string | null
-    category: 'private' | 'public' | null
-    date: string | null
-    exchangeMethod: string | null
-  }> | null
-  collections: Array<{
-    title: string | null
-    city: string | null
-    country: string | null
-    dateStart: string | null
-    dateEnd: string | null
-  }> | null
-  summary: RichText | null
-  description: RichText | null
-} | null
-
-// Source: ../src/routes/(frontend)/catalogue-raisonne/+page.server.ts
-// Variable: catalogueRaisonneQuery
-// Query: *[_type == "catalogueRaisonne"][0] {		"description": coalesce(description[_key == $locale][0].value, description[_key == $baseLocale][0].value),		artworks[]-> {			_id,			title,			date,			image {				asset-> {					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    },				}			},		},	}
-export type CatalogueRaisonneQueryResult = {
-  description: RichText | null
-  artworks: Array<{
-    _id: string
-    title: string | null
-    date: string | null
-    image: {
-      asset: {
-        _id: string
-        _type: 'sanity.imageAsset'
-        assetId: string | null
-        extension: string | null
-        mimeType: string | null
-        width: number | null
-        height: number | null
-        aspectRatio: number | null
-        blurHash: string | null
-      } | null
-    } | null
-  }> | null
-} | null
-
-// Source: ../src/routes/(frontend)/exhibitions-and-news/+page.server.ts
-// Variable: exhibitionsAndNewsQuery
-// Query: {		"exhibitions": *[_type == "exhibition"] {			_id,			"title": coalesce(title[_key == $locale][0].value, title[_key == $baseLocale][0].value),			date,			dateEnd,			venue,			location,			image {				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				}			},			"summary": coalesce(summary[_key == $locale][0].value, summary[_key == $baseLocale][0].value),			"body": coalesce(body[_key == $locale][0].value, body[_key == $baseLocale][0].value),		},		"news": *[_type == "news"] {			_id,			"title": coalesce(title[_key == $locale][0].value, title[_key == $baseLocale][0].value),			date,			image {				asset->{					    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }				}			},			"summary": coalesce(summary[_key == $locale][0].value, summary[_key == $baseLocale][0].value),			"body": coalesce(body[_key == $locale][0].value, body[_key == $baseLocale][0].value),		}	}
-export type ExhibitionsAndNewsQueryResult = {
-  exhibitions: Array<{
-    _id: string
-    title: string | null
-    date: string | null
-    dateEnd: string | null
-    venue: string | null
-    location: string | null
-    image: {
-      asset: {
-        _id: string
-        _type: 'sanity.imageAsset'
-        assetId: string | null
-        extension: string | null
-        mimeType: string | null
-        width: number | null
-        height: number | null
-        aspectRatio: number | null
-        blurHash: string | null
-      } | null
-    } | null
-    summary: RichText | null
-    body: RichText | null
-  }>
-  news: Array<{
-    _id: string
-    title: string | null
-    date: string | null
-    image: {
-      asset: {
-        _id: string
-        _type: 'sanity.imageAsset'
-        assetId: string | null
-        extension: string | null
-        mimeType: string | null
-        width: number | null
-        height: number | null
-        aspectRatio: number | null
-        blurHash: string | null
-      } | null
-    } | null
-    summary: RichText | null
-    body: RichText | null
-  }>
-}
-
-// Source: ../src/routes/(frontend)/exhibitions-and-news/[id]/+page.server.ts
-// Variable: exhibitionOrNewsQuery
-// Query: *[_type == "exhibition" || _type == "news" && _id == $id][0] {		_id,		_type,		"title": coalesce(title[_key == $locale][0].value, title[_key == $baseLocale][0].value),		date,		dateEnd,		venue,		location,		image {			asset->{				    _id,    _type,    assetId,    _type == "sanity.fileAsset" => {        extension,        mimeType,        url,        originalFilename,    },    _type == "sanity.imageAsset" => {        extension,        mimeType,        "width": metadata.dimensions.width,        "height": metadata.dimensions.height,        "aspectRatio": metadata.dimensions.aspectRatio,        "blurHash": metadata.blurHash,    },    _type == "mux.videoAsset" => {        playbackId,        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),        "duration": data.duration,    }			}		},		"summary": coalesce(summary[_key == $locale][0].value, summary[_key == $baseLocale][0].value),		"body": coalesce(body[_key == $locale][0].value, body[_key == $baseLocale][0].value),	}
-export type ExhibitionOrNewsQueryResult =
-  | {
-      _id: string
-      _type: 'exhibition'
+    article: {
       title: string | null
+      slug: string | null
       date: string | null
-      dateEnd: string | null
-      venue: string | null
-      location: string | null
-      image: {
+      coverImage: {
         asset: {
           _id: string
           _type: 'sanity.imageAsset'
@@ -706,70 +392,16 @@ export type ExhibitionOrNewsQueryResult =
           blurHash: string | null
         } | null
       } | null
-      summary: RichText | null
-      body: RichText | null
-    }
-  | {
-      _id: string
-      _type: 'news'
-      title: string | null
-      date: string | null
-      dateEnd: null
-      venue: null
-      location: null
-      image: {
-        asset: {
-          _id: string
-          _type: 'sanity.imageAsset'
-          assetId: string | null
-          extension: string | null
-          mimeType: string | null
-          width: number | null
-          height: number | null
-          aspectRatio: number | null
-          blurHash: string | null
-        } | null
-      } | null
-      summary: RichText | null
-      body: RichText | null
-    }
-  | null
-
-// Source: ../src/routes/(frontend)/foundation/+page.server.ts
-// Variable: foundationQuery
-// Query: *[_type == "foundation"][0] {		"description": coalesce(description[_key == $locale][0].value, description[_key == $baseLocale][0].value),		quote {			"quote": coalesce(description[_key == $locale][0].value, description[_key == $baseLocale][0].value),			author,		},		"collection": coalesce(collection[_key == $locale][0].value, collection[_key == $baseLocale][0].value),		faq[] {			"question": coalesce(question[_key == $locale][0].value, question[_key == $baseLocale][0].value),			"answer": coalesce(answer[_key == $locale][0].value, answer[_key == $baseLocale][0].value),		},		quote2 {			"quote": coalesce(description[_key == $locale][0].value, description[_key == $baseLocale][0].value),			author,		},		"contact": coalesce(contact[_key == $locale][0].value, contact[_key == $baseLocale][0].value),		emails[] {			name,			email,		},	}
-export type FoundationQueryResult = {
-  description: RichText | null
-  quote: {
-    quote: null
-    author: string | null
-  } | null
-  collection: RichText | null
-  faq: Array<{
-    question: string | null
-    answer: string | null
+    } | null
   }> | null
-  quote2: {
-    quote: null
-    author: string | null
-  } | null
-  contact: RichText | null
-  emails: Array<{
-    name: InternationalizedArrayString | null
-    email: string | null
-  }> | null
+  seo: Seo | null
 } | null
 
 // Query TypeMap
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "home"][0] {\n\t\t"text": coalesce(text[_key == $locale][0].value, text[_key == $baseLocale][0].value),\n\t\tartworks[]->{\n\t\t\tid,\n\t\t\ttitle,\n\t\t\tdate,\n\t\t\timage {\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t}\n\t\t\t},\n\t\t},\n\t\tsectionCards[] {\n\t\t\t"title": coalesce(title[_key == $locale][0].value, title[_key == $baseLocale][0].value),\n\t\t\t"description": coalesce(description[_key == $locale][0].value, description[_key == $baseLocale][0].value),\n\t\t\timage {\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t},\n\t\t\t\tcrop,\n\t\t\t\thotspot,\n\t\t\t},\n\t\t\turl\n\t\t},\n\t\t"aboutText": coalesce(aboutText[_key == $locale][0].value, aboutText[_key == $baseLocale][0].value),\n\t\taboutImage {\n\t\t\tasset->{\n\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t},\n\t\t\tcaption,\n\t\t},\n\t}': HomeQueryResult
-    '*[_type == "archive"][0] {\n\t\t"description": coalesce(description[_key == $locale][0].value, description[_key == $baseLocale][0].value),\n\n\t\tartworks[]-> {\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tdate,\n\t\t\timage {\n\t\t\t\tasset-> {\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n,\n\t\t\t\t}\n\t\t\t},\n\t\t},\n\t}': ArchiveQueryResult
-    '*[_type == "artwork" && _id == $id][0] {\n\t\tid,\n\t\ttitle,\n\t\tdate,\n\t\tmaterial-> {\n\t\t\tname,\n\t\t},\n\t\tdimensions,\n\t\timage {\n\t\t\tasset-> {\n\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n,\n\t\t\t},\n\t\t},\n\t\towners[]-> {\n\t\t\tname,\n\t\t\tlocation,\n\t\t\tcategory,\n\t\t\tdate,\n\t\t\texchangeMethod,\n\t\t},\n\t\tcollections[]-> {\n\t\t\ttitle,\n\t\t\tcity,\n\t\t\tcountry,\n\t\t\tdateStart,\n\t\t\tdateEnd,\n\t\t},\n\t\t"summary": coalesce(summary[_key == $locale][0].value, summary[_key == $baseLocale][0].value),\n\t\t"description": coalesce(description[_key == $locale][0].value, description[_key == $baseLocale][0].value),\n\t}': ArtworkQueryResult
-    '*[_type == "catalogueRaisonne"][0] {\n\t\t"description": coalesce(description[_key == $locale][0].value, description[_key == $baseLocale][0].value),\n\n\t\tartworks[]-> {\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tdate,\n\t\t\timage {\n\t\t\t\tasset-> {\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n,\n\t\t\t\t}\n\t\t\t},\n\t\t},\n\t}': CatalogueRaisonneQueryResult
-    '{\n\t\t"exhibitions": *[_type == "exhibition"] {\n\t\t\t_id,\n\t\t\t"title": coalesce(title[_key == $locale][0].value, title[_key == $baseLocale][0].value),\n\t\t\tdate,\n\t\t\tdateEnd,\n\t\t\tvenue,\n\t\t\tlocation,\n\t\t\timage {\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t}\n\t\t\t},\n\t\t\t"summary": coalesce(summary[_key == $locale][0].value, summary[_key == $baseLocale][0].value),\n\t\t\t"body": coalesce(body[_key == $locale][0].value, body[_key == $baseLocale][0].value),\n\t\t},\n\t\t"news": *[_type == "news"] {\n\t\t\t_id,\n\t\t\t"title": coalesce(title[_key == $locale][0].value, title[_key == $baseLocale][0].value),\n\t\t\tdate,\n\t\t\timage {\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t}\n\t\t\t},\n\t\t\t"summary": coalesce(summary[_key == $locale][0].value, summary[_key == $baseLocale][0].value),\n\t\t\t"body": coalesce(body[_key == $locale][0].value, body[_key == $baseLocale][0].value),\n\t\t}\n\t}': ExhibitionsAndNewsQueryResult
-    '*[_type == "exhibition" || _type == "news" && _id == $id][0] {\n\t\t_id,\n\t\t_type,\n\t\t"title": coalesce(title[_key == $locale][0].value, title[_key == $baseLocale][0].value),\n\t\tdate,\n\t\tdateEnd,\n\t\tvenue,\n\t\tlocation,\n\t\timage {\n\t\t\tasset->{\n\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t}\n\t\t},\n\t\t"summary": coalesce(summary[_key == $locale][0].value, summary[_key == $baseLocale][0].value),\n\t\t"body": coalesce(body[_key == $locale][0].value, body[_key == $baseLocale][0].value),\n\t}': ExhibitionOrNewsQueryResult
-    '*[_type == "foundation"][0] {\n\t\t"description": coalesce(description[_key == $locale][0].value, description[_key == $baseLocale][0].value),\n\t\tquote {\n\t\t\t"quote": coalesce(description[_key == $locale][0].value, description[_key == $baseLocale][0].value),\n\t\t\tauthor,\n\t\t},\n\t\t"collection": coalesce(collection[_key == $locale][0].value, collection[_key == $baseLocale][0].value),\n\t\tfaq[] {\n\t\t\t"question": coalesce(question[_key == $locale][0].value, question[_key == $baseLocale][0].value),\n\t\t\t"answer": coalesce(answer[_key == $locale][0].value, answer[_key == $baseLocale][0].value),\n\t\t},\n\t\tquote2 {\n\t\t\t"quote": coalesce(description[_key == $locale][0].value, description[_key == $baseLocale][0].value),\n\t\t\tauthor,\n\t\t},\n\t\t"contact": coalesce(contact[_key == $locale][0].value, contact[_key == $baseLocale][0].value),\n\t\temails[] {\n\t\t\tname,\n\t\t\temail,\n\t\t},\n\t}': FoundationQueryResult
+    '*[_type == "settings"][0] {\n\t\temail,\n\t\tphoneNumber,\n\t\tonlineBookingUrl,\n\t\tinstagramUrl,\n\t\tfacebookUrl,\n\t\tlinkedinUrl,\n\t}': SettingsQueryResult
+    '*[_type == "home"][0] {\n\t\ttagline,\n\t\tcoverImage {\n\t\t\tasset->{\n\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t},\n\t\t\talt,\n\t\t},\n\t\tintro,\n\t\tmissionStatement,\n\t\tservices[] {\n\t\t\tname,\n\t\t\tdescription,\n\t\t\timage {\n\t\t\t\tasset->{\n\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t}\n\t\t\t},\n\t\t\tarticle->{\n\t\t\t\ttitle,\n\t\t\t\t"slug": slug.current,\n\t\t\t\tdate,\n\t\t\t\tcoverImage {\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t\n    _id,\n    _type,\n    assetId,\n    _type == "sanity.fileAsset" => {\n        extension,\n        mimeType,\n        url,\n        originalFilename,\n    },\n    _type == "sanity.imageAsset" => {\n        extension,\n        mimeType,\n        "width": metadata.dimensions.width,\n        "height": metadata.dimensions.height,\n        "aspectRatio": metadata.dimensions.aspectRatio,\n        "blurHash": metadata.blurHash,\n    },\n    _type == "mux.videoAsset" => {\n        playbackId,\n        "width": coalesce(data.tracks[0].max_width, data.tracks[1].max_width),\n        "height": coalesce(data.tracks[0].max_height, data.tracks[1].max_height),\n        "aspectRatio": coalesce(data.tracks[0].max_width / data.tracks[0].max_height, data.tracks[1].max_width / data.tracks[1].max_height),\n        "duration": data.duration,\n    }\n\n\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tseo,\n\t}': HomeQueryResult
   }
 }

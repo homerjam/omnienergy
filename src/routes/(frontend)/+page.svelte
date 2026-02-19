@@ -6,6 +6,8 @@
 	import Header from '$lib/components/Header.svelte';
 
 	let { data }: { data: PageData } = $props();
+
+	$inspect(data);
 </script>
 
 <div class="absolute top-0 left-0 z-1 w-full">
@@ -16,14 +18,15 @@
 	class="relative z-0 flex h-[60vh] w-full flex-col overflow-hidden px-4 py-6 lg:h-[66vh] lg:p-12"
 >
 	<p class="relative z-2 mt-auto text-3xl text-white lg:text-5xl">
-		Shaping beliefs.<br />Changing behaviour.
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html data.home?.tagline?.replace(/\n/g, '<br />')}
 	</p>
 
 	<div class="absolute inset-0 z-1 bg-linear-0 from-black/75 via-transparent to-black/50"></div>
 	<img
 		class="absolute top-0 left-0 z-0 h-full w-full scale-120 object-cover lg:object-[50%]"
-		src="/images/82-DSC00019.jpg"
-		alt="Eloisa Cullington, Omni Energy Therapy"
+		src={imageUrl(data.home?.coverImage, { width: 2240, height: 1260 })}
+		alt={data.home?.coverImage?.alt}
 	/>
 </div>
 

@@ -20,9 +20,50 @@ export const home = defineType({
   ],
   fields: [
     defineField({
-      name: 'text',
-      title: 'Text',
-      type: 'richText',
+      name: 'tagline',
+      title: 'Tagline',
+      type: 'text',
+      rows: 2,
+      validation: (rule) => rule.required(),
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'coverImage',
+      title: 'Cover Image',
+      type: 'image',
+      options: {hotspot: true},
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+        },
+      ],
+      validation: (rule) => rule.required(),
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'intro',
+      title: 'Intro',
+      type: 'text',
+      rows: 4,
+      validation: (rule) => rule.required(),
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'missionStatement',
+      title: 'Mission Statement',
+      type: 'text',
+      rows: 12,
+      validation: (rule) => rule.required(),
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'services',
+      title: 'Services',
+      type: 'array',
+      of: [defineArrayMember({type: 'service'})],
+      validation: (rule) => rule.required(),
       group: 'editorial',
     }),
     defineField({

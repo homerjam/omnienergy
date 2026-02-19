@@ -1,6 +1,6 @@
 import {ListItemBuilder, StructureResolver} from 'sanity/structure'
 import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
-import {HomeIcon} from '@sanity/icons'
+import {BookIcon, CogIcon, HomeIcon} from '@sanity/icons'
 
 /**
  * Structure overrides
@@ -23,7 +23,14 @@ const hiddenDocTypes = (listItem: ListItemBuilder) => {
     return false
   }
 
-  return !['home', 'media.tag', 'mux.videoAsset', 'assist.instruction.context'].includes(id)
+  return ![
+    'article',
+    'home',
+    'settings',
+    'media.tag',
+    'mux.videoAsset',
+    'assist.instruction.context',
+  ].includes(id)
 }
 
 export const structure: StructureResolver = (S, context) =>
@@ -38,7 +45,19 @@ export const structure: StructureResolver = (S, context) =>
         .icon(HomeIcon)
         .child(S.editor().title('Home').schemaType('home').documentId('home')),
 
-      // S.divider(),
+      orderableDocumentListDeskItem({
+        type: 'article',
+        S,
+        context,
+        title: 'Library',
+        icon: BookIcon,
+      }),
+
+      S.listItem()
+        .id('settings')
+        .title('Settings')
+        .icon(CogIcon)
+        .child(S.editor().title('Settings').schemaType('settings').documentId('settings')),
 
       ...S.documentTypeListItems().filter(hiddenDocTypes),
     ])

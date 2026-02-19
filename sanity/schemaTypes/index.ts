@@ -1,6 +1,21 @@
+import {article} from './documents/article'
 import {home} from './documents/home'
-import {richText} from './objects/rich-text'
-import {seo} from './objects/seo'
+import {settings} from './documents/settings'
+import {embed} from './objects/embed'
 import {quote} from './objects/quote'
+import {richText} from './objects/rich-text'
+import {richTextWithMedia} from './objects/rich-text-with-media'
+import {seo} from './objects/seo'
+import {service} from './objects/service'
 
-export const schemaTypes = [home, richText, seo, quote]
+export const schemaTypes = [
+  article,
+  home,
+  settings,
+  embed,
+  quote,
+  richText,
+  richTextWithMedia,
+  seo,
+  service,
+]
