@@ -19,7 +19,7 @@
 
 <Header />
 
-<main class="mx-auto max-w-3xl px-4 py-16 lg:px-8">
+<main class="mx-auto max-w-3xl flex-1 px-4 py-16 lg:px-8">
 	<h1 class="mb-4 text-center type-heading">{data.page?.title ?? 'Privacy Policy'}</h1>
 
 	<div class="prose max-w-none type-copy-default text-black!">

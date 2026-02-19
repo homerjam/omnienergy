@@ -24,4 +24,6 @@
 	/> -->
 </svelte:head>
 
-{@render children()}
+<div class="flex min-h-screen flex-col">
+	{@render children()}
+</div>
