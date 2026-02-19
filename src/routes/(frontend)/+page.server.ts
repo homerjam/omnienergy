@@ -13,13 +13,20 @@ export const load = (async ({ locals }) => {
 		},
 		intro,
 		missionStatement,
+		profileImage {
+			asset->{
+				${assetFragment}
+			},
+			alt,
+		},
 		services[] {
 			name,
 			description,
 			image {
 				asset->{
 					${assetFragment}
-				}
+				},
+				alt,
 			},
 			article->{
 				title,
@@ -28,7 +35,8 @@ export const load = (async ({ locals }) => {
 				coverImage {
 					asset->{
 						${assetFragment}
-					}
+					},
+					alt,
 				},
 			},
 		},

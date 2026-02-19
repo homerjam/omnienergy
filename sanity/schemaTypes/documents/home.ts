@@ -59,6 +59,21 @@ export const home = defineType({
       group: 'editorial',
     }),
     defineField({
+      name: 'profileImage',
+      title: 'Profile Image',
+      type: 'image',
+      options: {hotspot: true},
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+        },
+      ],
+      validation: (rule) => rule.required(),
+      group: 'editorial',
+    }),
+    defineField({
       name: 'services',
       title: 'Services',
       type: 'array',

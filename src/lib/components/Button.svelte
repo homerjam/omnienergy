@@ -4,6 +4,7 @@
 	let {
 		kind = 'default',
 		href,
+		target = '_self',
 		disabled = false,
 		loading = false,
 		onclick,
@@ -23,6 +24,7 @@
 			| 'pill-small'
 			| 'pill-large';
 		href?: string;
+		target?: string;
 		disabled?: boolean;
 		loading?: boolean;
 		onclick?: (() => void) | undefined;
@@ -36,6 +38,7 @@
 <svelte:element
 	this={href ? 'a' : 'button'}
 	{href}
+	{target}
 	{disabled}
 	{onclick}
 	role="button"
