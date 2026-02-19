@@ -79,7 +79,7 @@
 		<div class="m-auto space-y-2 type-copy-large">
 			{@html marked.parse(data.home?.intro ?? '')}
 		</div>
-		<div class="hidden space-y-2 type-copy-default sm:block">
+		<div class="m-auto hidden space-y-2 type-copy-default sm:block">
 			{@html marked.parse(data.home?.missionStatement ?? '')}
 		</div>
 	</div>

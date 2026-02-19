@@ -53,6 +53,7 @@
 body {
 	@apply antialiased;
 	@apply bg-off-white;
+	@apply min-h-screen;
 }
 
 p a {

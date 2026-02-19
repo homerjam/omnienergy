@@ -11,6 +11,9 @@ importers:
       $sanity:
         specifier: file:sanity
         version: omnienergy@file:sanity(@babel/runtime@7.28.6)(@codemirror/lint@6.9.3)(@codemirror/theme-one-dark@6.1.3)(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.0.1)(@types/node@22.19.7)(@types/react@19.2.10)(babel-plugin-react-compiler@1.0.0)(codemirror@6.0.2)(jiti@2.6.1)(lightningcss@1.30.2)(react-is@19.2.4)(rxjs@7.8.2)(tsx@4.21.0)(typescript@5.9.3)(vitest@3.2.4(@types/node@22.19.7)(jiti@2.6.1)(jsdom@26.1.0)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2))(yaml@2.8.2)
+      '@portabletext/to-html':
+        specifier: ^5.0.1
+        version: 5.0.1
       '@sanity/client':
         specifier: ^7.14.1
         version: 7.14.1(debug@4.4.3)

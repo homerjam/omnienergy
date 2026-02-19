@@ -10,7 +10,9 @@
 		className,
 	]}
 >
-	<h1 class="type-title">Omni Energy Therapy</h1>
+	<a href="/">
+		<h1 class="type-title">Omni Energy Therapy</h1>
+	</a>
 
-	<Button kind="pill" href="#contact">Get in touch</Button>
+	<Button kind="pill" href="/#contact">Get in touch</Button>
 </div>
