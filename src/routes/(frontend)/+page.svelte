@@ -25,7 +25,7 @@
 	<div class="absolute inset-0 z-1 bg-linear-0 from-black/75 via-transparent to-black/50"></div>
 	<img
 		class="absolute top-0 left-0 z-0 h-full w-full scale-120 object-cover lg:object-[50%]"
-		src={imageUrl(data.home?.coverImage, { width: 2240, height: 1260 })}
+		src={imageUrl(data.home?.coverImage, { width: 2240, height: 1260, quality: 80, sharpen: 1 })}
 		alt={data.home?.coverImage?.alt}
 	/>
 </div>
