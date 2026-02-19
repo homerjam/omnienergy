@@ -1,10 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import sampleSize from 'lodash-es/sampleSize';
+	import { marked } from 'marked';
 	import { toHTML } from '@portabletext/to-html';
 	import { imageUrl } from '$lib/helpers';
-	import type { PageData } from './$types';
 	import Button from '$lib/components/Button.svelte';
 	import Header from '$lib/components/Header.svelte';
+	import Testimonial from '$lib/components/Testimonial.svelte';
+	import type { PageData } from './$types';
+	import Footer from '$lib/components/Footer.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -35,7 +39,7 @@
 <div
 	class="relative z-0 flex h-[60vh] w-full flex-col overflow-hidden px-4 py-6 lg:h-[66vh] lg:p-12"
 >
-	<p class="relative z-2 mt-auto text-3xl text-white lg:text-5xl">
+	<p class="relative z-2 mt-auto type-heading text-white">
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html data.home?.tagline?.replace(/\n/g, '<br />')}
 	</p>
@@ -50,20 +54,16 @@
 
 <div bind:this={sentinelEl} class="h-px w-full" aria-hidden="true"></div>
 <div
-	class="sticky top-0 z-2 -mt-px w-full bg-linear-0 from-transparent via-off-white/10 via-[0.5rem] to-off-white to-[2rem] transition-opacity duration-75"
-	class:opacity-0={!headerVisible}
-	class:opacity-100={headerVisible}
-	class:pointer-events-none={!headerVisible}
+	class={[
+		'sticky top-0 z-2 -mt-px mb-4 w-full lg:mb-8',
+		'border-b bg-off-white',
+		// 'bg-linear-0 from-transparent via-off-white/10 via-[0.5rem] to-off-white to-[2rem]',
+		'transition-opacity duration-75',
+		headerVisible ? 'opacity-100' : 'pointer-events-none opacity-0',
+	]}
 >
 	<Header />
 </div>
-
-<!-- <div class="flex p-32 pb-8">
-	<p class="text-center text-3xl">
-		My work is grounded in a simple belief: When you understand your inner world, you gain the power
-		to change your outer world.
-	</p>
-</div> -->
 
 <div class="flex gap-6 px-4 lg:gap-12 lg:px-24 2xl:px-48">
 	<div class="w-auto shrink-0 lg:w-1/2">
@@ -75,65 +75,56 @@
 		/>
 	</div>
 
-	<div class="w-auto space-y-2 lg:w-1/2 lg:space-y-4">
-		<div class="space-y-2 text-base sm:text-lg md:text-2xl">
-			{@html data.home?.intro
-				?.split('\n')
-				.map((line) => `<p>${line}</p>`)
-				.join('')}
+	<div class="flex w-auto flex-col gap-y-2 lg:w-1/2 lg:gap-y-4">
+		<div class="m-auto space-y-2 type-copy-large">
+			{@html marked.parse(data.home?.intro ?? '')}
 		</div>
-		<div class="hidden space-y-2 text-sm sm:block md:text-base lg:text-lg">
-			{@html data.home?.missionStatement
-				?.split('\n')
-				.map((line) => `<p>${line}</p>`)
-				.join('')}
+		<div class="hidden space-y-2 type-copy-default sm:block">
+			{@html marked.parse(data.home?.missionStatement ?? '')}
 		</div>
 	</div>
 </div>
 
 <div class="px-4 py-6 sm:hidden">
-	<div class="space-y-2 text-sm">
-		{@html data.home?.missionStatement
-			?.split('\n')
-			.map((line) => `<p>${line}</p>`)
-			.join('')}
+	<div class="space-y-2 type-copy-default">
+		{@html marked.parse(data.home?.missionStatement ?? '')}
 	</div>
 </div>
 
-<div class="flex items-center justify-center p-24 pb-6">
-	<h2 class="text-3xl lg:text-5xl">Services</h2>
+<div id="services" class="flex items-center justify-center pt-28 pb-6">
+	<h2 class="type-heading">Services</h2>
 </div>
 
 <div class="p-4 md:space-y-12 lg:px-12">
 	{#each data.home?.services as service, index (index)}
 		<div class="grid grid-cols-1 items-center md:grid-cols-2 md:gap-x-12">
 			<div class={['order-2 space-y-2 lg:space-y-4', index % 2 === 0 && 'md:order-1']}>
-				<h3 class="text-lg/snug lg:text-3xl">{service.name}</h3>
-				<div class="space-y-2 text-sm lg:text-xl">
-					{@html service.description}
+				<h3 class="type-title">{service.name}</h3>
+				<div class="space-y-2 type-copy-default">
+					{@html marked.parse(service.description ?? '')}
 				</div>
-				<p class="text-sm underline lg:text-xl">Learn more in the Library →</p>
+				<p class="type-copy-default underline">Learn more in the Library →</p>
 			</div>
 			<div class={['order-1', index % 2 === 0 && 'md:order-2']}>
 				<img
-					class="-my-12 ml-auto aspect-square w-1/2 opacity-60 mix-blend-darken md:my-auto md:w-auto md:opacity-80"
+					class="-my-12 ml-auto aspect-square w-1/2 opacity-60 mix-blend-darken grayscale md:my-auto md:w-auto md:opacity-80"
 					src={imageUrl(service.image, { width: 1024, quality: 80, sharpen: 1 })}
 					alt={service.image?.alt}
+					loading="lazy"
 				/>
 			</div>
 		</div>
 	{/each}
 </div>
 
-<div class="flex items-center justify-center p-24 pb-6">
-	<h2 class="text-3xl lg:text-5xl">Contact</h2>
+<div id="contact" class="flex items-center justify-center pt-28 pb-6">
+	<h2 class="type-heading">Contact</h2>
 </div>
 
 <div class="flex flex-wrap gap-6 p-4 md:flex-nowrap lg:gap-24 lg:px-24 xl:px-48">
-	<div class="w-full space-y-4 text-lg lg:w-1/2 lg:space-y-8 lg:text-2xl">
+	<div class="w-full space-y-4 type-copy-large lg:w-1/2 lg:space-y-8">
 		<p>
-			If you’re ready to begin, or simply want to explore whether this is the right fit — I invite
-			you to get in touch.
+			{@html marked.parse(data.home?.contact ?? '')}
 		</p>
 		<p>
 			<a href={`mailto:${data.settings?.email ?? ''}`}>{data.settings?.email ?? ''}</a>
@@ -148,6 +139,68 @@
 	</div>
 
 	<div class="w-full lg:w-1/2">
-		<img class="aspect-square rounded-2xl object-cover" src="/images/24-DSC09564.jpg" />
+		<img
+			class="aspect-square rounded-2xl object-cover"
+			src={imageUrl(data.home?.contactImage, {
+				width: 1024,
+				height: 1024,
+				quality: 80,
+				sharpen: 1,
+			})}
+			alt={data.home?.contactImage?.alt}
+			loading="lazy"
+		/>
 	</div>
 </div>
+
+<div id="testimonials" class="flex items-center justify-center pt-28 pb-6">
+	<h2 class="type-heading">Testimonials</h2>
+</div>
+
+<div class="grid grid-cols-1 gap-12 px-6 pt-6 md:px-24 lg:grid-cols-2">
+	{#each sampleSize(data.home?.testimonials, 4) as testimonial, index (index)}
+		<Testimonial {testimonial} />
+	{/each}
+</div>
+
+<div id="testimonials" class="flex items-center justify-center pt-28 pb-6">
+	<h2 class="type-heading">Qualifications & Experience</h2>
+</div>
+
+<div class="flex gap-6 px-4 pt-6 lg:gap-12 lg:px-24 2xl:px-48">
+	<div class="w-auto shrink-0 lg:w-1/2">
+		<img
+			class="sticky top-28 m-auto max-h-[50vw] rounded-2xl sm:max-h-[50vw] lg:max-h-[75vh]"
+			src={imageUrl(data.home?.qualificationsImage, { width: 1024, quality: 80, sharpen: 1 })}
+			alt={data.home?.qualificationsImage?.alt}
+			loading="lazy"
+		/>
+	</div>
+
+	<div class="w-auto space-y-2 lg:w-1/2 lg:space-y-4">
+		<div class="relative space-y-2 type-copy-small">
+			{#each data.home?.qualifications as qualification, index (index)}
+				<p>
+					{qualification.title}
+					{#if qualification.details}
+						<br />
+						({qualification.details})
+					{/if}
+				</p>
+			{/each}
+
+			<div class="absolute right-0 bottom-0">
+				<img
+					class="aspect-square w-32 opacity-40 mix-blend-darken grayscale"
+					src="/images/omnienergy-qualifications.png"
+					alt="Qualifications"
+				/>
+			</div>
+		</div>
+		<div class="space-y-2 type-copy-small">
+			{@html marked.parse(data.home?.experience ?? '')}
+		</div>
+	</div>
+</div>
+
+<Footer />

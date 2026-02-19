@@ -40,6 +40,32 @@ export const load = (async ({ locals }) => {
 				},
 			},
 		},
+		contact,
+		contactImage {
+			asset->{
+				${assetFragment}
+			},
+			alt,
+		},
+		testimonials[] {
+			source,
+			text,
+			date,
+			rating,
+			author,
+			originalUrl,
+		},
+		qualificationsImage {
+			asset->{
+				${assetFragment}
+			},
+			alt,
+		},
+		qualifications[] {
+			title,
+			details,
+		},
+		experience,
 		seo,
 	}`;
 

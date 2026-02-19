@@ -25,9 +25,29 @@
 	--color-off-white: #ddd9d3;
 }
 
-@utility type-p {
+@utility type-heading {
 	@apply font-sans;
-	@apply text-2xl/tight;
+	@apply text-3xl lg:text-5xl;
+}
+
+@utility type-title {
+	@apply font-sans;
+	@apply text-xl md:text-3xl;
+}
+
+@utility type-copy-large {
+	@apply font-sans;
+	@apply text-base sm:text-lg md:text-2xl;
+}
+
+@utility type-copy-default {
+	@apply font-sans;
+	@apply text-sm md:text-base lg:text-lg;
+}
+
+@utility type-copy-small {
+	@apply font-sans;
+	@apply text-xs md:text-sm lg:text-base;
 }
 
 body {
@@ -37,4 +57,9 @@ body {
 
 p a {
 	@apply underline;
+}
+
+ul li {
+	@apply list-disc;
+	@apply ml-[2ch];
 }

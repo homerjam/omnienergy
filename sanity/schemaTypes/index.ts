@@ -8,6 +8,7 @@ import {richTextWithMedia} from './objects/rich-text-with-media'
 import {seo} from './objects/seo'
 import {service} from './objects/service'
 import {muxVideo} from './objects/mux-video'
+import {testimonial} from './objects/testimonial'
 
 export const schemaTypes = [
   article,
@@ -20,4 +21,5 @@ export const schemaTypes = [
   seo,
   service,
   muxVideo,
+  testimonial,
 ]
