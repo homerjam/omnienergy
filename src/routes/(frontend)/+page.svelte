@@ -207,16 +207,11 @@
 </div>
 
 <div class="flex gap-6 px-4 pt-6 lg:gap-12 lg:px-24 2xl:px-48">
-	<div class="w-auto shrink-0 lg:w-1/2">
-		<img
-			class="sticky top-28 m-auto max-h-[50vw] rounded-2xl sm:max-h-[50vw] lg:max-h-[75vh]"
-			src={imageUrl(data.home?.qualificationsImage, { width: 1024, quality: 80, sharpen: 1 })}
-			alt={data.home?.qualificationsImage?.alt}
-			loading="lazy"
-		/>
-	</div>
-
 	<div class="w-auto space-y-4 lg:w-1/2 lg:space-y-8">
+		<div class="space-y-2 type-copy-small">
+			{@html marked.parse(data.home?.experience ?? '')}
+		</div>
+
 		<div class="relative space-y-2 type-copy-small">
 			{#each data.home?.qualifications as qualification, index (index)}
 				<p>
@@ -228,7 +223,7 @@
 				</p>
 			{/each}
 
-			<div class="absolute right-0 bottom-0">
+			<div class="absolute right-4 -bottom-4 md:right-16">
 				<img
 					class="aspect-square w-32 opacity-40 mix-blend-darken grayscale"
 					src="/images/omnienergy-qualifications.png"
@@ -236,9 +231,15 @@
 				/>
 			</div>
 		</div>
-		<div class="space-y-2 type-copy-small">
-			{@html marked.parse(data.home?.experience ?? '')}
-		</div>
+	</div>
+
+	<div class="w-auto shrink-0 lg:w-1/2">
+		<img
+			class="sticky top-28 m-auto max-h-[50vw] rounded-2xl sm:max-h-[50vw] lg:max-h-[75vh]"
+			src={imageUrl(data.home?.qualificationsImage, { width: 1024, quality: 80, sharpen: 1 })}
+			alt={data.home?.qualificationsImage?.alt}
+			loading="lazy"
+		/>
 	</div>
 </div>
 
