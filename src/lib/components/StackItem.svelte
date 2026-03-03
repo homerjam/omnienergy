@@ -4,7 +4,7 @@
 	import { Tween } from 'svelte/motion';
 	import { toStore } from 'svelte/store';
 	import type { Attachment } from 'svelte/attachments';
-	import { Compartment, draggable, events, position, transform } from '@neodrag/svelte';
+	import { Compartment, draggable, events, position, transform, threshold } from '@neodrag/svelte';
 
 	const SNAP_BACK_DURATION = 500;
 	const SNAP_BACK_THRESHOLD = 150;
@@ -106,12 +106,8 @@
 					...transformTween.current,
 					// x: transformTween.current.x * 1.1,
 					// y: transformTween.current.y * 1.1,
-					x:
-						transformTween.current.x +
-						Math.min(Math.abs(velocity.x * 0.5), 1.5) * transformTween.current.x,
-					y:
-						transformTween.current.y +
-						Math.min(Math.abs(velocity.y * 0.5), 1.5) * transformTween.current.y,
+					x: transformTween.current.x + velocity.x * transformTween.current.x,
+					y: transformTween.current.y + velocity.x * transformTween.current.y,
 				},
 				{ duration: SNAP_BACK_DURATION * 0.25, easing: quadOut }
 			);
@@ -149,6 +145,7 @@
 
 		const draggableAttachment = draggable([
 			positionCompartment,
+			threshold({ distance: 8, delay: 100 }),
 			events({
 				onDragStart({ event, offset }) {
 					isDragging = true;
@@ -178,7 +175,14 @@
 					time = now;
 					pointer = { x: event.x, y: event.y };
 
-					velocity = { x: delta.x / deltaTime, y: delta.y / deltaTime };
+					if (pointerStart.x === 0 && pointerStart.y === 0) {
+						pointerStart = { x: event.x, y: event.y };
+					}
+
+					velocity = {
+						x: Math.max(0, Math.min(Math.abs(delta.x / deltaTime), 0.3)),
+						y: Math.max(0, Math.min(Math.abs(delta.y / deltaTime), 0.3)),
+					};
 
 					const drag = {
 						x: event.x - pointerStart.x - dragStart.x,
