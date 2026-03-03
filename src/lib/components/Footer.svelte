@@ -4,7 +4,9 @@
 	let data = $state(page.data);
 </script>
 
-<div class="wh mt-24 flex flex-wrap justify-between gap-4 p-4 type-copy-small lg:gap-8 lg:p-12">
+<div
+	class="mx-auto mt-24 flex w-full max-w-7xl flex-wrap justify-between gap-4 p-4 type-copy-small lg:gap-8 lg:p-12 xl:px-12"
+>
 	<div class="m-auto flex gap-4 xl:ml-0">
 		{#if data.settings?.instagramUrl}
 			<a href={data.settings?.instagramUrl ?? ''} target="_blank">Instagram</a>
