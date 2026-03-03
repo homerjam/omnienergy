@@ -15,9 +15,11 @@
 	},
 	"dependencies": {
 		"$sanity": "file:sanity",
+		"@neodrag/svelte": "3.0.0-next.8",
 		"@portabletext/to-html": "^5.0.1",
 		"@sanity/client": "^7.14.1",
 		"groq": "^5.7.0",
+		"hls.js": "^1.6.15",
 		"lodash-es": "^4.17.23",
 		"marked": "^17.0.3"
 	},

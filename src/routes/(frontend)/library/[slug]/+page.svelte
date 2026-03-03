@@ -17,7 +17,7 @@
 
 <Header />
 
-<main class="mx-auto max-w-3xl px-4 py-16 lg:px-8">
+<main class="mx-auto max-w-4xl px-4 py-16 lg:px-8">
 	<h2 class="mb-2 type-heading">{data.article?.title ?? 'Article'}</h2>
 
 	<!-- {#if data.article?.date}
@@ -49,5 +49,11 @@
 		)}
 	</div>
 </main>
+
+<div id="library" class="flex items-center justify-center pt-28 pb-6">
+	<h2 class="type-heading">
+		Back to the <a href="/library" class="underline">library</a>
+	</h2>
+</div>
 
 <Footer />

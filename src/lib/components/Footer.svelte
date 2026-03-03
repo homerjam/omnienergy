@@ -17,7 +17,7 @@
 		{/if}
 	</div>
 
-	<div class="m-auto flex gap-2 xl:mr-0">
+	<div class="m-auto flex gap-2 xl:m-auto">
 		<a href="/privacy-policy">Privacy Policy</a>
 		<a href="/terms-and-conditions">Terms & Conditions</a>
 	</div>

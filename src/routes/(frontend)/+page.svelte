@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import sampleSize from 'lodash-es/sampleSize';
+	// import sampleSize from 'lodash-es/sampleSize';
 	import { marked } from 'marked';
-	import { toHTML } from '@portabletext/to-html';
+	// import { toHTML } from '@portabletext/to-html';
 	import { imageUrl } from '$lib/helpers';
 	import Button from '$lib/components/Button.svelte';
 	import Header from '$lib/components/Header.svelte';
@@ -10,8 +10,12 @@
 	import type { PageData } from './$types';
 	import Footer from '$lib/components/Footer.svelte';
 	import { resolve } from '$app/paths';
+	import HlsVideo from '$lib/components/HlsVideo.svelte';
+	import Stack from '$lib/components/Stack.svelte';
 
 	let { data }: { data: PageData } = $props();
+
+	let stack: Stack | undefined = $state(undefined);
 
 	let headerVisible = $state(false);
 	let sentinelEl: HTMLDivElement | undefined;
@@ -30,7 +34,7 @@
 		return () => observer.disconnect();
 	});
 
-	$inspect(data);
+	// $inspect(data);
 </script>
 
 <svelte:head>
@@ -100,14 +104,87 @@
 	<Header />
 </div>
 
-<div class="flex justify-center gap-6 px-4 lg:gap-12 lg:px-24 xl:gap-24 2xl:px-48">
+<div class="flex justify-center gap-6 px-4 md:gap-12 lg:gap-12 lg:px-24 xl:gap-24 2xl:px-48">
 	<div class="w-auto shrink-0">
-		<img
-			class="sticky top-28 m-auto max-h-[50vw] rounded-2xl sm:max-h-[50vw] lg:max-h-[75vh]"
-			src={imageUrl(data.home?.profileImage, { width: 1024, quality: 80, sharpen: 1 })}
-			alt={data.home?.profileImage?.alt}
-			loading="lazy"
-		/>
+		<div class="sticky top-28 m-auto aspect-9/16 max-h-[50vw] sm:max-h-[50vw] lg:max-h-[75vh]">
+			<!-- <img
+				class="relative z-1 h-full w-full overflow-hidden rounded-2xl object-cover"
+				src={imageUrl(data.home?.profileImage, { width: 1024, quality: 80, sharpen: 1 })}
+				alt={data.home?.profileImage?.alt}
+				loading="lazy"
+			/> -->
+
+			<div class="relative z-2 aspect-9/16 h-full w-60"></div>
+
+			<div
+				class="absolute inset-0 z-2 aspect-9/16 h-full w-full cursor-grab active:cursor-grabbing"
+				style="--scale-step: 0.05; --brightness-step: 0.2;"
+			>
+				<Stack
+					bind:this={stack}
+					items={[{ image: data.home?.profileImage }, ...(data.home?.videos ?? [])]}
+				>
+					{#snippet children({ item: _item, index })}
+						{@const item = _item as {
+							index: number;
+							image?: {
+								asset: {
+									_id: string;
+									url: string;
+								};
+								crop?: {
+									left: number;
+									bottom: number;
+									right: number;
+									top: number;
+								};
+								hotspot?: {
+									x: number;
+									y: number;
+								};
+								alt: string;
+							};
+							video?: {
+								asset: {
+									playbackId: string;
+								};
+							};
+						}}
+						{#if item.image}
+							<div class="relative">
+								<img
+									class="pointer-events-none aspect-9/16 h-full w-full rounded-2xl object-cover"
+									src={imageUrl(item.image, { width: 1024, quality: 80, sharpen: 1 })}
+									alt={item.image?.alt}
+									loading="lazy"
+								/>
+
+								<button
+									class="absolute right-4 bottom-4 cursor-pointer text-white"
+									onclick={() => {
+										stack?.next();
+									}}
+									aria-label="Play"
+								>
+									<span class="icon-[mingcute--play-fill] size-10"></span>
+								</button>
+							</div>
+						{/if}
+						{#if item.video}
+							<HlsVideo
+								class="h-full w-full rounded-2xl object-cover"
+								src={`https://stream.mux.com/${item.video?.asset?.playbackId}.m3u8`}
+								playsInline
+								autoplay={index === 0}
+								onended={() => {
+									stack?.next();
+								}}
+							/>
+						{/if}
+					{/snippet}
+				</Stack>
+			</div>
+		</div>
 	</div>
 
 	<div class="flex w-auto max-w-lg flex-col gap-y-2 lg:gap-y-4">
@@ -120,7 +197,7 @@
 	</div>
 </div>
 
-<div class="px-4 py-6 sm:hidden">
+<div class="px-4 pt-18 sm:hidden">
 	<div class="space-y-2 type-copy-default">
 		{@html marked.parse(data.home?.missionStatement ?? '')}
 	</div>
@@ -162,9 +239,9 @@
 
 <div class="flex gap-6 p-4 lg:gap-24 lg:px-24 xl:px-48">
 	<div class="w-2/3 space-y-4 type-copy-large lg:w-1/2 lg:space-y-8">
-		<p>
+		<div>
 			{@html marked.parse(data.home?.contact ?? '')}
-		</p>
+		</div>
 		<p>
 			<a href={`mailto:${data.settings?.email ?? ''}`}>{data.settings?.email ?? ''}</a>
 			<br />{data.settings?.phoneNumber ?? ''}
@@ -197,7 +274,7 @@
 </div>
 
 <div class="grid grid-cols-1 gap-12 px-4 pt-6 md:px-24 lg:grid-cols-2">
-	{#each sampleSize(data.home?.testimonials, 4) as testimonial, index (index)}
+	{#each (data.home?.testimonials ?? []).slice(0, 4) as testimonial, index (index)}
 		<Testimonial {testimonial} />
 	{/each}
 </div>
@@ -241,6 +318,12 @@
 			loading="lazy"
 		/>
 	</div>
+</div>
+
+<div id="library" class="flex items-center justify-center pt-28 pb-6">
+	<h2 class="type-heading">
+		Find out more in the <a href="/library" class="underline">library</a>
+	</h2>
 </div>
 
 <Footer />

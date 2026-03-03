@@ -14,5 +14,8 @@
 		<h1 class="type-title">Omni Energy Therapy</h1>
 	</a>
 
-	<Button kind="pill" href="/#contact">Get in touch</Button>
+	<div class="flex items-center gap-6">
+		<!-- <a href="/library" class="type-title">Library</a> -->
+		<Button kind="pill" href="/#contact">Get in touch</Button>
+	</div>
 </div>

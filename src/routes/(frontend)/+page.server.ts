@@ -23,6 +23,14 @@ export const load = (async ({ locals }) => {
 			hotspot,
 			alt,
 		},
+		videos[] {
+			title,
+			video {
+				asset->{
+					${assetFragment}
+				},
+			},
+		},
 		services[] {
 			name,
 			description,
