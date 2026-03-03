@@ -240,18 +240,6 @@
 	{/each}
 </div>
 
-<div id="testimonials" class="flex items-center justify-center pt-32 pb-6">
-	<h2 class="type-heading">Testimonials</h2>
-</div>
-
-<div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 pt-6 md:px-24 lg:grid-cols-2">
-	{#each (data.home?.testimonials ?? []).slice(0, 4) as testimonial, index (index)}
-		<span class={[index >= 2 && 'hidden lg:block']}>
-			<Testimonial {testimonial} />
-		</span>
-	{/each}
-</div>
-
 <div id="contact" class="flex items-center justify-center pt-32 pb-6">
 	<h2 class="type-heading">Contact</h2>
 </div>
@@ -301,6 +289,18 @@
 		href={data.settings?.onlineBookingUrl ?? ''}
 		target="_blank">Schedule an appointment</Button
 	>
+</div>
+
+<div id="testimonials" class="flex items-center justify-center pt-32 pb-6">
+	<h2 class="type-heading">Testimonials</h2>
+</div>
+
+<div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 pt-6 md:px-24 lg:grid-cols-2">
+	{#each (data.home?.testimonials ?? []).slice(0, 4) as testimonial, index (index)}
+		<span class={[index >= 2 && 'hidden lg:block']}>
+			<Testimonial {testimonial} />
+		</span>
+	{/each}
 </div>
 
 <div id="experience" class="flex items-center justify-center pt-32 pb-6">
