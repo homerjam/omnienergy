@@ -9,6 +9,7 @@
 	}: {
 		src: string;
 		class?: string | Array<string | boolean>;
+		onclick?: (event: MouseEvent & { currentTarget: EventTarget & HTMLVideoElement }) => void;
 		oncanplay?: (event: Event & { currentTarget: EventTarget & HTMLVideoElement }) => void;
 	} & Partial<
 		Pick<
@@ -18,6 +19,7 @@
 			| 'muted'
 			| 'loop'
 			| 'playsInline'
+			| 'onclick'
 			| 'onended'
 			| 'onloadedmetadata'
 			| 'oncanplay'

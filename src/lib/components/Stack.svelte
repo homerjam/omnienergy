@@ -15,6 +15,8 @@
 		children: Snippet<[{ item: unknown; index: number }]>;
 	} = $props();
 
+	let element: HTMLDivElement | undefined;
+
 	let isDragging = $state(false);
 	let isDismissing = $state(false);
 
@@ -72,8 +74,8 @@
 
 		await tweenMap.get(key)?.set(
 			{
-				x: random(150, 300, false),
-				y: random(-20, 20, false),
+				x: random((element?.clientWidth ?? 0) * 0.75, (element?.clientWidth ?? 0) * 1.25, false),
+				y: random((element?.clientHeight ?? 0) * -0.05, (element?.clientHeight ?? 0) * 0.05, false),
 				rotate: random(-5, 5, false),
 				scale: 1,
 				brightness: 1,
@@ -85,7 +87,10 @@
 	}
 </script>
 
-<div class={['relative', isDragging || isDismissing ? 'z-1000' : 'z-0', className]}>
+<div
+	bind:this={element}
+	class={['relative', isDragging || isDismissing ? 'z-1000' : 'z-0', className]}
+>
 	{#each items as item, index ((item as { id: unknown }).id || item)}
 		<StackItem
 			bind:this={stackItems[index]}

@@ -104,7 +104,7 @@
 	<Header />
 </div>
 
-<div class="flex justify-center gap-6 px-4 md:gap-12 lg:gap-12 lg:px-24 xl:gap-24 2xl:px-48">
+<div class="flex justify-center gap-8 px-4 md:gap-12 lg:gap-12 lg:px-24 xl:gap-24 2xl:px-48">
 	<div class="w-auto shrink-0">
 		<div class="sticky top-28 m-auto aspect-9/16 max-h-[50vw] sm:max-h-[50vw] lg:max-h-[75vh]">
 			<!-- <img
@@ -151,7 +151,12 @@
 							};
 						}}
 						{#if item.image}
-							<div class="relative">
+							<button
+								class="relative"
+								onclick={() => {
+									stack?.next();
+								}}
+							>
 								<img
 									class="pointer-events-none aspect-9/16 h-full w-full rounded-2xl object-cover"
 									src={imageUrl(item.image, { width: 1024, quality: 80, sharpen: 1 })}
@@ -159,16 +164,10 @@
 									loading="lazy"
 								/>
 
-								<button
-									class="absolute right-4 bottom-4 cursor-pointer text-white"
-									onclick={() => {
-										stack?.next();
-									}}
-									aria-label="Play"
-								>
+								<div class="absolute right-4 bottom-4 cursor-pointer text-white">
 									<span class="icon-[mingcute--play-fill] size-10"></span>
-								</button>
-							</div>
+								</div>
+							</button>
 						{/if}
 						{#if item.video}
 							<HlsVideo
@@ -178,6 +177,14 @@
 								autoplay={index === 0}
 								onended={() => {
 									stack?.next();
+								}}
+								onclick={(event) => {
+									const video = event.currentTarget as HTMLVideoElement;
+									if (video.paused) {
+										video.play();
+									} else {
+										video.pause();
+									}
 								}}
 							/>
 						{/if}
