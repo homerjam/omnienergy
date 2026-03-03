@@ -58,6 +58,10 @@
 	@apply text-xs md:text-sm lg:text-base;
 }
 
+html {
+	@apply scroll-smooth;
+}
+
 body {
 	@apply antialiased;
 	@apply bg-off-white;

@@ -1,21 +1,19 @@
 <script lang="ts">
-	import { random } from 'lodash-es';
-	import type { Snippet } from 'svelte';
-	import StackItem from './StackItem.svelte';
+	import { type Snippet } from 'svelte';
 	import { SvelteMap } from 'svelte/reactivity';
-	import type { Tween } from 'svelte/motion';
+	import StackItem from './StackItem.svelte';
 
 	let {
 		items,
+		transformMap = new SvelteMap(),
 		class: className,
 		children,
 	}: {
 		items: unknown[];
+		transformMap?: Map<unknown, { x: number; y: number; rotate: number }>;
 		class?: string;
 		children: Snippet<[{ item: unknown; index: number }]>;
 	} = $props();
-
-	let element: HTMLDivElement | undefined;
 
 	let isDragging = $state(false);
 	let isDismissing = $state(false);
@@ -23,35 +21,6 @@
 	// let currentIndex = $state(0);
 
 	const stackItems = $state<StackItem[]>([]);
-
-	let transformMap: Map<unknown, { x: number; y: number; rotate: number }> = new SvelteMap();
-	let tweenMap: Map<
-		unknown,
-		Tween<{
-			x: number;
-			y: number;
-			rotate: number;
-			scale: number;
-			brightness: number;
-		}>
-	> = new SvelteMap();
-
-	function updateTransformMap() {
-		items.forEach((item) => {
-			let key = (item as { id: unknown }).id || item;
-			transformMap.set(key, {
-				x: transformMap.get(key)?.x || random(-5, 5, false),
-				y: transformMap.get(key)?.y || random(-5, 5, false),
-				rotate: transformMap.get(key)?.rotate || random(-5, 5, false),
-			});
-		});
-	}
-
-	updateTransformMap();
-
-	// $effect(() => {
-	// 	updateTransformMap();
-	// });
 
 	function handleDismissStart() {
 		isDismissing = true;
@@ -70,34 +39,17 @@
 	}
 
 	export async function next() {
-		let key = (items[0] as { id: unknown }).id || items[0];
-
-		await tweenMap.get(key)?.set(
-			{
-				x: random((element?.clientWidth ?? 0) * 0.75, (element?.clientWidth ?? 0) * 1.25, false),
-				y: random((element?.clientHeight ?? 0) * -0.05, (element?.clientHeight ?? 0) * 0.05, false),
-				rotate: random(-5, 5, false),
-				scale: 1,
-				brightness: 1,
-			},
-			{ duration: 300 }
-		);
-
-		stackItems[0]?.actions.dismiss?.();
+		stackItems[0]?.dismiss();
 	}
 </script>
 
-<div
-	bind:this={element}
-	class={['relative', isDragging || isDismissing ? 'z-1000' : 'z-0', className]}
->
+<div class={['relative', isDragging || isDismissing ? 'z-1000' : 'z-0', className]}>
 	{#each items as item, index ((item as { id: unknown }).id || item)}
 		<StackItem
 			bind:this={stackItems[index]}
 			index={getIndex(index)}
 			{item}
 			{transformMap}
-			{tweenMap}
 			onDismissStart={handleDismissStart}
 			onDismissEnd={handleDismissEnd}
 			onDragStart={() => (isDragging = true)}

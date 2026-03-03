@@ -5,6 +5,7 @@
 	import { toStore } from 'svelte/store';
 	import type { Attachment } from 'svelte/attachments';
 	import { Compartment, draggable, events, position, transform, threshold } from '@neodrag/svelte';
+	import { random } from 'lodash-es';
 
 	const SNAP_BACK_DURATION = 500;
 	const SNAP_BACK_THRESHOLD = 150;
@@ -13,7 +14,6 @@
 		item,
 		index,
 		transformMap,
-		tweenMap,
 		onDismissStart,
 		onDismissEnd,
 		onDragStart,
@@ -23,16 +23,6 @@
 		item: unknown;
 		index: number;
 		transformMap?: Map<unknown, { x: number; y: number; rotate: number }>;
-		tweenMap?: Map<
-			unknown,
-			Tween<{
-				x: number;
-				y: number;
-				rotate: number;
-				scale: number;
-				brightness: number;
-			}>
-		>;
 		onDismissStart?: ({ index, item }: { index: number; item: unknown }) => void;
 		onDismissEnd?: () => void;
 		onDragStart?: () => void;
@@ -43,20 +33,36 @@
 	let isDragging = $state(false);
 	let isDismissing = $state(false);
 
-	export const actions: {
-		dismiss?: () => Promise<void>;
-	} = {};
+	let element: HTMLDivElement;
+
+	let tween: Tween<{
+		x: number;
+		y: number;
+		rotate: number;
+		scale: number;
+		brightness: number;
+	}>;
+
+	let _dismiss: () => Promise<void>;
 
 	const attachment: Attachment = (element) => {
 		const el = element as HTMLElement;
 
 		const key = (item as { id: unknown }).id || item;
 
+		if (!transformMap?.get(key)) {
+			transformMap?.set(key, {
+				x: index === 0 ? 0 : index === 1 ? 2 : random(-6, 6, false),
+				y: index === 0 ? 0 : index === 1 ? 14 : random(-18, 18, false),
+				rotate: index === 0 ? 0 : index === 1 ? -3 : random(-4, 4, false),
+			});
+		}
+
 		const x = transformMap?.get(key)?.x || 0;
 		const y = transformMap?.get(key)?.y || 0;
 		const rotate = transformMap?.get(key)?.rotate || 0;
 
-		const tween = new Tween(
+		tween = new Tween(
 			{
 				x,
 				y,
@@ -66,8 +72,6 @@
 			},
 			{ easing: expoOut, duration: 0 }
 		);
-
-		tweenMap?.set(key, tween);
 
 		const tweenStore = toStore(() => tween.current);
 
@@ -96,7 +100,7 @@
 			y: 0,
 		};
 
-		async function dismiss() {
+		_dismiss = async () => {
 			isDismissing = true;
 
 			onDismissStart?.({ index, item });
@@ -139,9 +143,7 @@
 					{ duration: 500 }
 				);
 			}, 500);
-		}
-
-		actions.dismiss = dismiss;
+		};
 
 		const draggableAttachment = draggable([
 			positionCompartment,
@@ -221,7 +223,7 @@
 						return;
 					}
 
-					dismiss();
+					_dismiss();
 				},
 			}),
 			transform(() => {}),
@@ -241,9 +243,25 @@
 			destroy();
 		};
 	};
+
+	export async function dismiss() {
+		await tween?.set(
+			{
+				x: random((element?.clientWidth ?? 0) * 0.75, (element?.clientWidth ?? 0) * 1.25, false),
+				y: random((element?.clientHeight ?? 0) * -0.05, (element?.clientHeight ?? 0) * 0.05, false),
+				rotate: random(-5, 5, false),
+				scale: 1,
+				brightness: 1,
+			},
+			{ duration: 300 }
+		);
+
+		_dismiss();
+	}
 </script>
 
 <div
+	bind:this={element}
 	class={[
 		'pointer-events-auto absolute inset-0 m-auto origin-center',
 		isDragging ? 'z-1000' : 'z-[calc(999-var(--index))]',

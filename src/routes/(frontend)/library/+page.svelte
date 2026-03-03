@@ -12,9 +12,11 @@
 	<title>Library | Omni Energy Therapy</title>
 </svelte:head>
 
-<Header />
+<div class={['sticky top-0 z-2 -mt-px mb-12 w-full lg:mb-8', 'border-b bg-off-white']}>
+	<Header />
+</div>
 
-<main class="mx-auto px-4 py-24 lg:px-12">
+<main class="mx-auto max-w-7xl px-4 py-24 lg:px-12 xl:px-12">
 	<h1 class="mb-32 text-center type-heading">Library</h1>
 
 	<div class="grid grid-cols-2 gap-8 md:grid-cols-2 md:gap-12 lg:grid-cols-3">

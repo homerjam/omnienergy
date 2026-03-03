@@ -15,7 +15,9 @@
 	{/if}
 </svelte:head>
 
-<Header />
+<div class={['sticky top-0 z-2 -mt-px mb-12 w-full lg:mb-8', 'border-b bg-off-white']}>
+	<Header />
+</div>
 
 <main class="mx-auto max-w-4xl px-4 py-16 lg:px-8">
 	<h2 class="mb-2 type-heading">{data.article?.title ?? 'Article'}</h2>
