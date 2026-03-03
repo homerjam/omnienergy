@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { random } from 'lodash-es';
 	import type { Snippet } from 'svelte';
-	import StackItem from '$lib/components/StackItem.svelte';
+	import StackItem from './StackItem.svelte';
 	import { SvelteMap } from 'svelte/reactivity';
 	import type { Tween } from 'svelte/motion';
 
@@ -42,7 +42,7 @@
 			transformMap.set(key, {
 				x: transformMap.get(key)?.x || random(-5, 5, false),
 				y: transformMap.get(key)?.y || random(-5, 5, false),
-				rotate: transformMap.get(key)?.rotate || random(-5, 2, false),
+				rotate: transformMap.get(key)?.rotate || random(-5, 5, false),
 			});
 		});
 	}

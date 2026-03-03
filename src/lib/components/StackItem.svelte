@@ -56,7 +56,7 @@
 		const y = transformMap?.get(key)?.y || 0;
 		const rotate = transformMap?.get(key)?.rotate || 0;
 
-		const transformTween = new Tween(
+		const tween = new Tween(
 			{
 				x,
 				y,
@@ -67,13 +67,13 @@
 			{ easing: expoOut, duration: 0 }
 		);
 
-		tweenMap?.set(key, transformTween);
+		tweenMap?.set(key, tween);
 
-		const transformTweenStore = toStore(() => transformTween.current);
+		const tweenStore = toStore(() => tween.current);
 
 		const positionCompartment = Object.assign(
 			Compartment.of(() => {
-				return position({ current: $state.snapshot(transformTween.current) });
+				return position({ current: $state.snapshot(tween.current) });
 			}),
 			{ name: 'position' }
 		);
@@ -101,18 +101,18 @@
 
 			onDismissStart?.({ index, item });
 
-			await transformTween.set(
+			await tween.set(
 				{
-					...transformTween.current,
-					// x: transformTween.current.x * 1.1,
-					// y: transformTween.current.y * 1.1,
-					x: transformTween.current.x + velocity.x * transformTween.current.x,
-					y: transformTween.current.y + velocity.x * transformTween.current.y,
+					...tween.current,
+					// x: tween.current.x * 1.1,
+					// y: tween.current.y * 1.1,
+					x: tween.current.x + velocity.x * tween.current.x,
+					y: tween.current.y + velocity.x * tween.current.y,
 				},
 				{ duration: SNAP_BACK_DURATION * 0.25, easing: quadOut }
 			);
 
-			await transformTween.set(
+			await tween.set(
 				{
 					x,
 					y,
@@ -128,7 +128,7 @@
 			onDismissEnd?.();
 
 			setTimeout(() => {
-				transformTween.set(
+				tween.set(
 					{
 						x,
 						y,
@@ -145,7 +145,7 @@
 
 		const draggableAttachment = draggable([
 			positionCompartment,
-			threshold({ distance: 8, delay: 100 }),
+			threshold({ distance: 1, delay: 1 }),
 			events({
 				onDragStart({ event, offset }) {
 					isDragging = true;
@@ -158,8 +158,8 @@
 					time = performance.now();
 					velocity = { x: 0, y: 0 };
 
-					transformTween.set({
-						...transformTween.current,
+					tween.set({
+						...tween.current,
 						x: offset.x,
 						y: offset.y,
 						scale: 1,
@@ -175,23 +175,19 @@
 					time = now;
 					pointer = { x: event.x, y: event.y };
 
-					if (pointerStart.x === 0 && pointerStart.y === 0) {
-						pointerStart = { x: event.x, y: event.y };
-					}
-
 					velocity = {
 						x: Math.max(0, Math.min(Math.abs(delta.x / deltaTime), 0.3)),
 						y: Math.max(0, Math.min(Math.abs(delta.y / deltaTime), 0.3)),
 					};
 
 					const drag = {
-						x: event.x - pointerStart.x - dragStart.x,
-						y: event.y - pointerStart.y - dragStart.y,
+						x: pointer.x - (pointerStart.x || pointer.x) - dragStart.x,
+						y: pointer.y - (pointerStart.y || pointer.y) - dragStart.y,
 					};
 
-					transformTween.set(
+					tween.set(
 						{
-							...transformTween.current,
+							...tween.current,
 							x: drag.x,
 							y: drag.y,
 							rotate: drag.x * 0.05,
@@ -204,17 +200,17 @@
 
 					onDragEnd?.();
 
-					if (transformTween.current.x === 0 && transformTween.current.y === 0) {
+					if (tween.current.x === 0 && tween.current.y === 0) {
 						return;
 					}
 
 					if (
-						Math.abs(transformTween.current.x) < SNAP_BACK_THRESHOLD &&
-						Math.abs(transformTween.current.y) < SNAP_BACK_THRESHOLD
+						Math.abs(tween.current.x) < SNAP_BACK_THRESHOLD &&
+						Math.abs(tween.current.y) < SNAP_BACK_THRESHOLD
 					) {
-						transformTween.set(
+						tween.set(
 							{
-								...transformTween.current,
+								...tween.current,
 								x,
 								y,
 								rotate,
@@ -231,14 +227,12 @@
 			transform(() => {}),
 		]);
 
-		const unsubscribeTransform = transformTweenStore.subscribe(
-			({ x, y, rotate, scale, brightness }) => {
-				el.style.translate = `${x}px ${y}px`;
-				el.style.rotate = `${rotate}deg`;
-				el.style.scale = `${scale}`;
-				el.style.filter = `brightness(${brightness})`;
-			}
-		);
+		const unsubscribeTransform = tweenStore.subscribe(({ x, y, rotate, scale, brightness }) => {
+			el.style.translate = `${x}px ${y}px`;
+			el.style.rotate = `${rotate}deg`;
+			el.style.scale = `${scale}`;
+			el.style.filter = `brightness(${brightness})`;
+		});
 
 		const destroy = draggableAttachment(el) as () => void;
 
