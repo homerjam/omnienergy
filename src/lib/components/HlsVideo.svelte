@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Hls from 'hls.js';
 
 	let {
@@ -27,6 +28,7 @@
 	> = $props();
 
 	let video: HTMLVideoElement;
+	let intersectionObserver: IntersectionObserver | null = null;
 
 	$effect(() => {
 		if (!video) return;
@@ -46,6 +48,30 @@
 		} else {
 			video.pause();
 		}
+	});
+
+	onMount(() => {
+		if (!video || typeof IntersectionObserver === 'undefined') return;
+
+		intersectionObserver = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.target === video && !entry.isIntersecting) {
+						video.pause();
+					}
+				}
+			},
+			{
+				threshold: 0.1
+			}
+		);
+
+		intersectionObserver.observe(video);
+
+		return () => {
+			intersectionObserver?.disconnect();
+			intersectionObserver = null;
+		};
 	});
 </script>
 
