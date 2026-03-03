@@ -247,8 +247,8 @@
 	export async function dismiss() {
 		await tween?.set(
 			{
-				x: random((element?.clientWidth ?? 0) * 0.75, (element?.clientWidth ?? 0) * 1.25, false),
-				y: random((element?.clientHeight ?? 0) * -0.05, (element?.clientHeight ?? 0) * 0.05, false),
+				x: random((element?.clientWidth ?? 0) * 0.75, (element?.clientWidth ?? 0) * 1, false),
+				y: random((element?.clientHeight ?? 0) * -0.1, (element?.clientHeight ?? 0) * 0.1, false),
 				rotate: random(-5, 5, false),
 				scale: 1,
 				brightness: 1,

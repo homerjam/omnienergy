@@ -118,7 +118,7 @@
 
 			<div
 				class="absolute inset-0 z-2 aspect-9/16 h-full w-full cursor-grab active:cursor-grabbing"
-				style="--scale-step: 0.05; --brightness-step: 0.2;"
+				style="--scale-step: 0.02; --brightness-step: 0.4;"
 			>
 				<Stack
 					bind:this={stack}
@@ -158,7 +158,7 @@
 								}}
 							>
 								<img
-									class="pointer-events-none aspect-9/16 h-full w-full rounded-2xl object-cover"
+									class="pointer-events-none aspect-9/16 h-full w-full rounded-2xl object-cover shadow-lg shadow-off-white/30"
 									src={imageUrl(item.image, { width: 1024, quality: 80, sharpen: 1 })}
 									alt={item.image?.alt}
 									loading="lazy"
@@ -171,7 +171,7 @@
 						{/if}
 						{#if item.video}
 							<HlsVideo
-								class="h-full w-full rounded-2xl object-cover"
+								class="h-full w-full rounded-2xl object-cover shadow-lg shadow-off-white/50"
 								src={`https://stream.mux.com/${item.video?.asset?.playbackId}.m3u8`}
 								playsInline
 								autoplay={index === 0}
