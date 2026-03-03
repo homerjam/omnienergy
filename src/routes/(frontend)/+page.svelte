@@ -114,7 +114,7 @@
 				loading="lazy"
 			/> -->
 
-			<div class="relative z-2 aspect-9/16 h-full w-60"></div>
+			<div class="relative z-2 aspect-9/16 h-full w-80"></div>
 
 			<div
 				class="absolute inset-0 z-2 aspect-9/16 h-full w-full cursor-grab active:cursor-grabbing"
