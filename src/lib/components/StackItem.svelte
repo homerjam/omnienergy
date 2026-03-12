@@ -233,7 +233,7 @@
 			el.style.translate = `${x}px ${y}px`;
 			el.style.rotate = `${rotate}deg`;
 			el.style.scale = `${scale}`;
-			el.style.filter = `brightness(${brightness})`;
+			// el.style.filter = `brightness(${brightness})`;
 		});
 
 		const destroy = draggableAttachment(el) as () => void;
@@ -271,8 +271,10 @@
 >
 	<div
 		class={[
-			!isDismissing &&
-				'scale-[calc(1-(var(--index)*var(--scale-step)))] brightness-[calc(1-(var(--index)*var(--brightness-step)))]',
+			!isDismissing && [
+				'scale-[calc(1-(var(--index)*var(--scale-step)))]',
+				// 'brightness-[calc(1-(var(--index)*var(--brightness-step)))]',
+			],
 			'ease-in-out-expo origin-center transition-all duration-500',
 		]}
 	>

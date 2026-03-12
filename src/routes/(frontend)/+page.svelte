@@ -15,6 +15,8 @@
 
 	let { data }: { data: PageData } = $props();
 
+	// $inspect(data);
+
 	let stack: Stack | undefined = $state(undefined);
 
 	let headerVisible = $state(false);
@@ -34,7 +36,32 @@
 		return () => observer.disconnect();
 	});
 
-	// $inspect(data);
+	let testimonials = $derived(data.home?.testimonials ?? []);
+
+	onMount(() => {
+		// Track the last index replaced so we never repeat the same one in a row
+		let lastIndex = -1;
+
+		function tick() {
+			if (testimonials.length <= 4) return;
+
+			// pick a random index 0..3, not equal to lastIndex
+			let possibleIndices = [0, 1, 2, 3].filter((i) => i !== lastIndex);
+			let idx = possibleIndices[Math.floor(Math.random() * possibleIndices.length)];
+
+			const arr = testimonials.slice(); // work on a shallow copy
+
+			const replaced = arr[idx];
+			arr[idx] = arr[arr.length - 1]; // place last item at idx
+			arr.splice(arr.length - 1, 1); // remove last item
+			arr.splice(4, 0, replaced); // insert replaced item at index 4
+
+			testimonials = arr;
+			lastIndex = idx;
+		}
+
+		setInterval(tick, 1500);
+	});
 </script>
 
 <svelte:head>
@@ -158,7 +185,7 @@
 								}}
 							>
 								<img
-									class="pointer-events-none aspect-9/16 h-full w-full rounded-2xl object-cover shadow-lg shadow-off-white/30"
+									class="pointer-events-none aspect-9/16 h-full w-full rounded-2xl object-cover shadow-2xl shadow-black/30"
 									src={imageUrl(item.image, { width: 1024, quality: 80, sharpen: 1 })}
 									alt={item.image?.alt}
 									loading="lazy"
@@ -171,7 +198,7 @@
 						{/if}
 						{#if item.video}
 							<HlsVideo
-								class="h-full w-full rounded-2xl object-cover shadow-lg shadow-off-white/50"
+								class="h-full w-full rounded-2xl object-cover shadow-2xl shadow-black/30"
 								src={`https://stream.mux.com/${item.video?.asset?.playbackId}.m3u8`}
 								playsInline
 								autoplay={index === 0}
@@ -296,10 +323,10 @@
 </div>
 
 <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 pt-6 md:px-24 lg:grid-cols-2">
-	{#each (data.home?.testimonials ?? []).slice(0, 4) as testimonial, index (index)}
-		<span class={[index >= 2 && 'hidden lg:block']}>
+	{#each testimonials.slice(0, 4) as testimonial, index (index)}
+		<div class={[index >= 2 && 'hidden lg:block']}>
 			<Testimonial {testimonial} />
-		</span>
+		</div>
 	{/each}
 </div>
 

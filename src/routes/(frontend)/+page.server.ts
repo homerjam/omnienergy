@@ -1,6 +1,7 @@
 import groq from 'groq';
 import { assetFragment, sanityClient, type HomeQueryResult } from '$lib/sanity';
 import type { PageServerLoad } from './$types';
+import { shuffle } from 'lodash-es';
 
 export const load = (async ({ locals }) => {
 	const homeQuery = groq`*[_type == "home"][0] {
@@ -66,6 +67,7 @@ export const load = (async ({ locals }) => {
 			alt,
 		},
 		testimonials[] {
+			_key,
 			source,
 			text,
 			date,
@@ -102,6 +104,10 @@ export const load = (async ({ locals }) => {
 	const home = await sanityClient.fetch<HomeQueryResult>(homeQuery, {
 		...locals,
 	});
+
+	if (home) {
+		home.testimonials = shuffle(home.testimonials ?? []);
+	}
 
 	return {
 		home,
